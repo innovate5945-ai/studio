@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -10,23 +11,23 @@ import {
   ArrowDownRight,
   Zap,
   LayoutGrid,
-  Filter
+  Filter,
+  Play,
+  Square
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { 
-  LineChart, 
-  Line, 
-  BarChart, 
-  Bar, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
   Tooltip as RechartsTooltip, 
   ResponsiveContainer,
-  AreaChart,
-  Area
+  BarChart,
+  Bar
 } from "recharts"
 import { FactBombModal } from "@/components/ai/fact-bomb-modal"
 import { cn } from "@/lib/utils"
@@ -43,6 +44,7 @@ const data = [
 
 export default function DashboardPage() {
   const [period, setPeriod] = React.useState("7d")
+  const [isSessionActive, setIsSessionActive] = React.useState(false)
 
   return (
     <div className="space-y-8 animate-in fade-in duration-700">
@@ -56,6 +58,20 @@ export default function DashboardPage() {
           </p>
         </div>
         <div className="flex items-center gap-3">
+          <Button 
+            onClick={() => setIsSessionActive(!isSessionActive)}
+            variant={isSessionActive ? "destructive" : "default"}
+            className={cn(
+              "font-bold transition-all duration-300",
+              !isSessionActive && "bg-emerald-500 hover:bg-emerald-600 text-white"
+            )}
+          >
+            {isSessionActive ? (
+              <><Square className="w-4 h-4 mr-2 fill-current" /> Stop Session</>
+            ) : (
+              <><Play className="w-4 h-4 mr-2 fill-current" /> Start Session</>
+            )}
+          </Button>
           <Tabs value={period} onValueChange={setPeriod} className="bg-card/50 border border-white/5 p-1 rounded-lg">
             <TabsList className="bg-transparent">
               <TabsTrigger value="24h" className="data-[state=active]:bg-primary">24H</TabsTrigger>
@@ -64,9 +80,6 @@ export default function DashboardPage() {
               <TabsTrigger value="all" className="data-[state=active]:bg-primary">ALL</TabsTrigger>
             </TabsList>
           </Tabs>
-          <Button variant="outline" size="icon" className="border-white/5 bg-card/50">
-            <Filter className="w-4 h-4" />
-          </Button>
         </div>
       </header>
 
@@ -185,7 +198,7 @@ function StatCard({ title, value, trend, trendUp, icon }: { title: string, value
           </div>
           <div className={cn(
             "flex items-center gap-1 text-xs font-bold px-2 py-1 rounded-full",
-            trendUp ? "text-primary bg-primary/10" : "text-destructive bg-destructive/10"
+            trendUp ? "text-emerald-400 bg-emerald-500/10" : "text-destructive bg-destructive/10"
           )}>
             {trendUp ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
             {trend}
