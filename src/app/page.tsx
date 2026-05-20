@@ -92,7 +92,7 @@ export default function DashboardPage() {
           icon={<Target className="w-5 h-5 text-primary" />} 
         />
         <StatCard 
-          title="Net PnL" 
+          title="Net P&L" 
           value="+$1,240.50" 
           trend="+$340 today" 
           trendUp={true} 
@@ -119,7 +119,7 @@ export default function DashboardPage() {
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
               <CardTitle className="font-headline text-xl">Equity Growth</CardTitle>
-              <CardDescription>Visualizing your PnL over the selected period.</CardDescription>
+              <CardDescription>Visualizing your P&L over the selected period.</CardDescription>
             </div>
             <LayoutGrid className="w-5 h-5 text-muted-foreground" />
           </CardHeader>

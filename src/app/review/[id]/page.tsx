@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -68,7 +69,7 @@ export default function TradeDetailPage() {
                 </p>
               </div>
               <div className="text-right">
-                <p className="text-xs text-muted-foreground font-bold uppercase tracking-widest">Net PnL</p>
+                <p className="text-xs text-muted-foreground font-bold uppercase tracking-widest">Net P&L</p>
                 <h2 className="text-4xl font-headline font-bold text-destructive">-$150.20</h2>
               </div>
             </CardHeader>
