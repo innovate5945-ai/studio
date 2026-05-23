@@ -138,7 +138,8 @@ studio/
 │   ├── actions/
 │   │   ├── alert-settings.ts   # [UI-ALERT-001]
 │   │   ├── discipline-cooldown.ts  # [UI-ALERT-002]
-│   │   └── auth.ts             # [UI-AUTH-001]
+│   │   ├── auth.ts             # [UI-AUTH-001]
+│   │   └── csv-upload.ts       # [UI-CSV-001]
 │   ├── ai/
 │   │   ├── genkit.ts
 │   │   ├── dev.ts
@@ -146,6 +147,7 @@ studio/
 │   │       └── ai-reality-check-fact-bomb.ts
 │   ├── components/
 │   │   ├── auth/               # [UI-AUTH-001] 로그인/회원가입 폼
+│   │   ├── upload/             # [UI-CSV-001] CSV 업로드
 │   │   ├── layout/
 │   │   ├── ai/
 │   │   ├── dashboard/
