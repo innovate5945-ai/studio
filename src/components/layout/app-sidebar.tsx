@@ -29,7 +29,7 @@ import {
 
 const mainNav = [
   { name: "Dashboard", href: "/", icon: LayoutDashboard },
-  { name: "Trade Logs", href: "/review", icon: BookOpen },
+  { name: "Trade Logs", href: "/reviews", icon: BookOpen },
   { name: "Analytics", href: "/reports", icon: BarChart3 },
   { name: "CSV Upload", href: "/upload", icon: UploadCloud },
 ]
@@ -66,7 +66,11 @@ export function AppSidebar() {
                 <SidebarMenuItem key={item.name}>
                   <SidebarMenuButton
                     asChild
-                    isActive={pathname === item.href}
+                    isActive={
+                      item.href === "/reviews"
+                        ? pathname === item.href || pathname.startsWith("/review")
+                        : pathname === item.href
+                    }
                     tooltip={item.name}
                   >
                     <Link href={item.href}>

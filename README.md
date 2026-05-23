@@ -11,7 +11,7 @@ Firebase Studio 기반 **Next.js 15** 트레이딩 규율 대시보드입니다.
 | 기능 | 설명 | 경로 |
 |------|------|------|
 | **Command Center** | 실시간 에쿼티·MDD 대시보드, 세션 시작/종료 | `/` |
-| **Trade Logs** | 시간순 거래 카드 스냅 리뷰 | `/review`, `/review/[id]` |
+| **Trade Logs** | 시간순 거래 카드 스냅 리뷰 | `/reviews`, `/review/[id]` |
 | **Analytics** | 승률·MDD 등 기간별 성과 분석 | `/reports` |
 | **CSV Upload** | 드래그 앤 드롭 거래 내역 업로드 | `/upload` |
 | **Discipline Thresholds** | 손실 한도·매매 횟수 상한 설정 | `/settings` |
@@ -129,7 +129,8 @@ studio/
 │   │   │   └── register/page.tsx
 │   │   └── (dashboard)/        # 메인 대시보드
 │   │       ├── page.tsx        # Command Center
-│   │       ├── review/         # Trade Logs
+│   │       ├── reviews/        # [UI-REVIEW-001] 복기 일지 목록
+│   │       ├── review/         # 복기 일지 상세
 │   │       ├── reports/        # Analytics
 │   │       ├── upload/         # CSV Upload
 │   │       ├── settings/       # Discipline Thresholds
@@ -150,6 +151,7 @@ studio/
 │   │   ├── upload/             # [UI-CSV-001] CSV 업로드
 │   │   ├── dashboard/          # [UI-DASH-001] 통합 대시보드 차트
 │   │   ├── reports/            # [UI-DASH-002] 주간/월간 리포트
+│   │   ├── reviews/            # [UI-REVIEW-001] 복기 일지
 │   │   ├── layout/
 │   │   ├── ai/
 │   │   ├── dashboard/
@@ -158,7 +160,8 @@ studio/
 │   ├── hooks/
 │   └── lib/
 │       ├── dashboard-fixtures.ts  # [UI-DASH-001] Mock 차트 데이터
-│       └── report-fixtures.ts     # [UI-DASH-002] Mock 리포트 데이터
+│       ├── report-fixtures.ts     # [UI-DASH-002] Mock 리포트 데이터
+│       └── review-fixtures.ts     # [UI-REVIEW-001] Mock 복기 일지
 ├── docs/
 │   └── blueprint.md
 ├── apphosting.yaml
