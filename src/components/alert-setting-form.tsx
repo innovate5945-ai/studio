@@ -20,7 +20,7 @@ interface AlertSettingFormProps {
 
 /**
  * @fileOverview [UI-ALERT-001] 알람 설정 화면 컴포넌트
- * 매매 기강을 위한 리스크 관리 기준(손실폭, 매매횟수)을 설정하는 폼입니다.
+ * 사용자의 매매 기강을 위해 리스크 관리 기준(손실폭, 매매횟수)을 설정하는 폼입니다.
  */
 export function AlertSettingForm({ isLoading, isError, onSave }: AlertSettingFormProps) {
   const { toast } = useToast()
@@ -29,7 +29,7 @@ export function AlertSettingForm({ isLoading, isError, onSave }: AlertSettingFor
   const [inputError, setInputError] = React.useState("")
   const [isSaving, setIsSaving] = React.useState(false)
 
-  // 매매 횟수 유효성 검사 로직
+  // 매매 횟수 유효성 검사
   const validate = (value: string) => {
     const num = parseInt(value)
     if (value.trim() === "" || isNaN(num) || num < 1) {
@@ -56,13 +56,13 @@ export function AlertSettingForm({ isLoading, isError, onSave }: AlertSettingFor
       }
 
       toast({
-        title: "설정 저장 완료",
-        description: "손실 제한 및 매매 횟수 설정이 성공적으로 반영되었습니다.",
+        title: "Success",
+        description: "설정이 성공적으로 저장되었습니다.",
       })
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "저장 실패",
+        title: "Error",
         description: "설정을 저장하는 중 오류가 발생했습니다.",
       })
     } finally {
@@ -70,7 +70,7 @@ export function AlertSettingForm({ isLoading, isError, onSave }: AlertSettingFor
     }
   }
 
-  // 로딩 상태 (스켈레톤 UI)
+  // 로딩 상태 처리 (스켈레톤 UI)
   if (isLoading) {
     return (
       <Card className="border-white/5 bg-card/50 backdrop-blur-sm">
@@ -99,23 +99,23 @@ export function AlertSettingForm({ isLoading, isError, onSave }: AlertSettingFor
 
   return (
     <div className="space-y-6">
-      {/* 에러 상태 배너 */}
+      {/* 에러 알림 배너 */}
       {isError && (
-        <Alert variant="destructive" className="bg-destructive/10 border-destructive/20 animate-in fade-in slide-in-from-top-2">
+        <Alert variant="destructive" className="bg-destructive/10 border-destructive/20">
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>오류 발생</AlertTitle>
           <AlertDescription>서버 설정 로드 중 문제가 발생했습니다. 다시 시도해 주세요.</AlertDescription>
         </Alert>
       )}
 
-      <Card className="border-white/5 bg-card/50 backdrop-blur-sm overflow-hidden shadow-xl">
+      <Card className="border-white/5 bg-card/50 backdrop-blur-sm shadow-xl">
         <CardHeader className="border-b border-white/5 bg-white/5">
           <CardTitle className="flex items-center gap-2 text-xl font-headline font-bold">
             <ShieldAlert className="w-5 h-5 text-primary" />
             알람 설정
           </CardTitle>
           <CardDescription>
-            사용자의 매매 기강을 위한 리스크 관리 기준을 설정합니다.
+            리스크 관리 기준을 설정하여 심리적 매매 편향을 방지합니다.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-10 pt-8">
@@ -123,7 +123,7 @@ export function AlertSettingForm({ isLoading, isError, onSave }: AlertSettingFor
           <div className="space-y-5">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <Label className="text-sm font-bold text-muted-foreground uppercase tracking-wider">손실폭 설정</Label>
-              <span className="text-sm font-bold text-primary bg-primary/10 px-3 py-1.5 rounded-lg border border-primary/20 shadow-inner">
+              <span className="text-sm font-bold text-primary bg-primary/10 px-3 py-1.5 rounded-lg border border-primary/20">
                 현재 설정: 당일 -{lossLimit[0]}% 손실 시 제한
               </span>
             </div>
@@ -136,13 +136,13 @@ export function AlertSettingForm({ isLoading, isError, onSave }: AlertSettingFor
               className="py-2"
               aria-label="손실폭 설정 슬라이더"
             />
-            <div className="flex justify-between text-[10px] font-bold text-muted-foreground uppercase tracking-widest opacity-60">
+            <div className="flex justify-between text-[10px] font-bold text-muted-foreground uppercase opacity-60">
               <span>최소 1%</span>
               <span>최대 20%</span>
             </div>
           </div>
 
-          {/* 2. 매매횟수 상한 입력 */}
+          {/* 2. 매매횟수 상한 입력 필드 */}
           <div className="space-y-4">
             <Label htmlFor="trade-cap" className="text-sm font-bold text-muted-foreground uppercase tracking-wider">
               매매횟수 상한
@@ -155,7 +155,7 @@ export function AlertSettingForm({ isLoading, isError, onSave }: AlertSettingFor
                 onChange={handleTradeCapChange}
                 placeholder="5"
                 className={cn(
-                  "pr-12 h-14 text-lg bg-white/5 border-white/10 focus:ring-primary transition-all font-mono",
+                  "pr-12 h-14 text-lg bg-white/5 border-white/10 transition-all",
                   inputError && "border-destructive focus:ring-destructive text-destructive"
                 )}
                 aria-label="매매횟수 상한 입력"
@@ -179,7 +179,7 @@ export function AlertSettingForm({ isLoading, isError, onSave }: AlertSettingFor
           <Button 
             onClick={handleSave} 
             disabled={hasValidationError || isSaving}
-            className="w-full font-bold h-14 text-lg shadow-lg shadow-primary/20 hover:scale-[1.01] active:scale-[0.99] transition-all"
+            className="w-full font-bold h-14 text-lg shadow-lg shadow-primary/20 transition-all"
           >
             {isSaving ? (
               <>

@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react"
 import { AlertSettingForm } from "@/components/alert-setting-form"
 
-// Mock Toast Hook
+// Mock useToast
 jest.mock("@/hooks/use-toast", () => ({
   useToast: jest.fn(() => ({
     toast: jest.fn(),
@@ -12,12 +12,7 @@ jest.mock("@/hooks/use-toast", () => ({
  * @fileOverview AlertSettingForm 컴포넌트 기능 및 접근성 테스트
  */
 describe("AlertSettingForm Component", () => {
-  const mockOnSave = jest.fn()
-
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-
+  
   describe("Happy Path (정상 렌더링)", () => {
     it("슬라이더와 입력 필드가 기본값(5%, 5회)으로 렌더링되어야 합니다.", () => {
       render(<AlertSettingForm />)
@@ -40,7 +35,7 @@ describe("AlertSettingForm Component", () => {
   describe("Edge States (상태별 피드백)", () => {
     it("isLoading이 true일 경우 스켈레톤 UI를 표시해야 합니다.", () => {
       render(<AlertSettingForm isLoading={true} />)
-      // 실제 폼 타이틀이 없어야 함 (스켈레톤 상태)
+      // 타이틀이 없어야 함 (스켈레톤 상태)
       expect(screen.queryByText(/알람 설정/i)).not.toBeInTheDocument()
     })
 
