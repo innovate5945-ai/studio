@@ -161,7 +161,8 @@ studio/
 │   └── lib/
 │       ├── dashboard-fixtures.ts  # [UI-DASH-001] Mock 차트 데이터
 │       ├── report-fixtures.ts     # [UI-DASH-002] Mock 리포트 데이터
-│       └── review-fixtures.ts     # [UI-REVIEW-001] Mock 복기 일지
+│       ├── review-fixtures.ts     # [UI-REVIEW-001] Mock 복기 일지
+│       └── review-detail-fixtures.ts  # [UI-REVIEW-002] 상세 Mock 데이터
 ├── docs/
 │   └── blueprint.md
 ├── apphosting.yaml
