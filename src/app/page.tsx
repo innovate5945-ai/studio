@@ -1,35 +1,37 @@
-
 "use client"
 
 import * as React from "react"
-import { 
-  TrendingUp, 
-  Target, 
-  Activity, 
-  Calendar, 
-  ArrowUpRight, 
+import {
+  TrendingUp,
+  Target,
+  Activity,
+  Calendar,
+  ArrowUpRight,
   ArrowDownRight,
   Zap,
   LayoutGrid,
-  Filter,
   Play,
-  Square
+  Square,
+  Plus,
+  Minus,
+  RotateCcw,
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
-import { 
+import {
   AreaChart,
   Area,
   XAxis,
   YAxis,
   CartesianGrid,
-  Tooltip as RechartsTooltip, 
+  Tooltip as RechartsTooltip,
   ResponsiveContainer,
   BarChart,
   Bar
 } from "recharts"
 import { FactBombModal } from "@/components/ai/fact-bomb-modal"
+import { useDiscipline } from "@/contexts/discipline-provider"
 import { cn } from "@/lib/utils"
 
 const data = [
@@ -44,7 +46,28 @@ const data = [
 
 export default function DashboardPage() {
   const [period, setPeriod] = React.useState("7d")
-  const [isSessionActive, setIsSessionActive] = React.useState(false)
+  const {
+    settings,
+    sessionMetrics,
+    isSessionActive,
+    cooldown,
+    startSession,
+    stopSession,
+    recordTrade,
+    addLoss,
+    resetSessionMetrics,
+  } = useDiscipline()
+
+  const handleSessionToggle = () => {
+    if (isSessionActive) {
+      stopSession()
+    } else {
+      startSession()
+    }
+  }
+
+  const lossNearLimit = sessionMetrics.dailyLossPercent >= settings.lossLimit * 0.8
+  const tradeNearCap = sessionMetrics.tradeCount >= settings.tradeCap * 0.8
 
   return (
     <div className="space-y-8 animate-in fade-in duration-700">
@@ -58,12 +81,13 @@ export default function DashboardPage() {
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <Button 
-            onClick={() => setIsSessionActive(!isSessionActive)}
+          <Button
+            onClick={handleSessionToggle}
+            disabled={cooldown.active}
             variant={isSessionActive ? "destructive" : "default"}
             className={cn(
               "font-bold transition-all duration-300",
-              !isSessionActive && "bg-emerald-500 hover:bg-emerald-600 text-white"
+              !isSessionActive && !cooldown.active && "bg-emerald-500 hover:bg-emerald-600 text-white"
             )}
           >
             {isSessionActive ? (
@@ -83,34 +107,83 @@ export default function DashboardPage() {
         </div>
       </header>
 
+      <Card className="border-white/5 bg-card/50 backdrop-blur-md">
+        <CardHeader className="flex flex-row items-center justify-between gap-4">
+          <div>
+            <CardTitle className="font-headline text-xl">Live Session Monitor</CardTitle>
+            <CardDescription>
+              세션 활성화 후 매매/손실을 기록하면 alert-settings 임계값과 비교해 자동 알람이 발생합니다.
+            </CardDescription>
+          </div>
+          <Button variant="outline" size="sm" onClick={resetSessionMetrics} disabled={cooldown.active}>
+            <RotateCcw className="w-4 h-4 mr-2" />
+            Reset Metrics
+          </Button>
+        </CardHeader>
+        <CardContent className="flex flex-col md:flex-row md:items-center gap-4">
+          <div className="flex-1 grid grid-cols-2 gap-4 text-sm">
+            <div className="p-3 rounded-lg bg-white/5 border border-white/5">
+              <p className="text-muted-foreground">당일 손실</p>
+              <p className={cn("text-2xl font-bold", lossNearLimit && "text-destructive")}>
+                {sessionMetrics.dailyLossPercent}% / {settings.lossLimit}%
+              </p>
+            </div>
+            <div className="p-3 rounded-lg bg-white/5 border border-white/5">
+              <p className="text-muted-foreground">매매 횟수</p>
+              <p className={cn("text-2xl font-bold", tradeNearCap && "text-destructive")}>
+                {sessionMetrics.tradeCount} / {settings.tradeCap}회
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Button
+              variant="secondary"
+              onClick={recordTrade}
+              disabled={!isSessionActive || cooldown.active}
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              +1 Trade
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => addLoss(1)}
+              disabled={!isSessionActive || cooldown.active}
+            >
+              <Minus className="w-4 h-4 mr-2" />
+              +1% Loss
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard 
-          title="Win Rate" 
-          value="64.2%" 
-          trend="+2.1%" 
-          trendUp={true} 
-          icon={<Target className="w-5 h-5 text-primary" />} 
+        <StatCard
+          title="Win Rate"
+          value="64.2%"
+          trend="+2.1%"
+          trendUp={true}
+          icon={<Target className="w-5 h-5 text-primary" />}
         />
-        <StatCard 
-          title="Net P&L" 
-          value="+$1,240.50" 
-          trend="+$340 today" 
-          trendUp={true} 
-          icon={<TrendingUp className="w-5 h-5 text-accent" />} 
+        <StatCard
+          title="Net P&L"
+          value="+$1,240.50"
+          trend="+$340 today"
+          trendUp={true}
+          icon={<TrendingUp className="w-5 h-5 text-accent" />}
         />
-        <StatCard 
-          title="Daily MDD" 
-          value="2.8%" 
-          trend="Limit: 5.0%" 
-          trendUp={false} 
-          icon={<Activity className="w-5 h-5 text-destructive" />} 
+        <StatCard
+          title="Daily MDD"
+          value={`${sessionMetrics.dailyLossPercent}%`}
+          trend={`Limit: ${settings.lossLimit}%`}
+          trendUp={sessionMetrics.dailyLossPercent < settings.lossLimit}
+          icon={<Activity className="w-5 h-5 text-destructive" />}
         />
-        <StatCard 
-          title="Trade Freq" 
-          value="14 / 20" 
-          trend="Near cap" 
-          trendUp={false} 
-          icon={<Calendar className="w-5 h-5 text-orange-400" />} 
+        <StatCard
+          title="Trade Freq"
+          value={`${sessionMetrics.tradeCount} / ${settings.tradeCap}`}
+          trend={tradeNearCap ? "Near cap" : "Within limit"}
+          trendUp={sessionMetrics.tradeCount < settings.tradeCap}
+          icon={<Calendar className="w-5 h-5 text-orange-400" />}
         />
       </div>
 
@@ -135,17 +208,17 @@ export default function DashboardPage() {
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border) / 0.3)" />
                 <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{fill: 'hsl(var(--muted-foreground))', fontSize: 12}} dy={10} />
                 <YAxis hide />
-                <RechartsTooltip 
+                <RechartsTooltip
                   contentStyle={{ backgroundColor: 'hsl(var(--card))', borderRadius: '12px', border: '1px solid hsl(var(--border))' }}
                   itemStyle={{ color: 'hsl(var(--primary))' }}
                 />
-                <Area 
-                  type="monotone" 
-                  dataKey="pnl" 
-                  stroke="hsl(var(--primary))" 
+                <Area
+                  type="monotone"
+                  dataKey="pnl"
+                  stroke="hsl(var(--primary))"
                   strokeWidth={3}
-                  fillOpacity={1} 
-                  fill="url(#colorPnl)" 
+                  fillOpacity={1}
+                  fill="url(#colorPnl)"
                 />
               </AreaChart>
             </ResponsiveContainer>

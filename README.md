@@ -131,7 +131,10 @@ studio/
 │   │   ├── audit/              # Audit Trail
 │   │   └── system/             # System Settings
 │   ├── actions/
-│   │   └── alert-settings.ts   # [UI-ALERT-001] 알람 설정 Server Action
+│   │   ├── alert-settings.ts   # [UI-ALERT-001] 알람 설정 Server Action
+│   │   └── discipline-cooldown.ts  # [UI-ALERT-002] 쿨타임 Server Action
+│   ├── contexts/
+│   │   └── discipline-provider.tsx # [UI-ALERT-002] 규율 위반 상태 관리
 │   ├── ai/
 │   │   ├── genkit.ts           # Genkit + Gemini 설정
 │   │   ├── dev.ts              # Genkit dev 진입점
