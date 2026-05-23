@@ -148,6 +148,7 @@ studio/
 │   ├── components/
 │   │   ├── auth/               # [UI-AUTH-001] 로그인/회원가입 폼
 │   │   ├── upload/             # [UI-CSV-001] CSV 업로드
+│   │   ├── dashboard/          # [UI-DASH-001] 통합 대시보드 차트
 │   │   ├── layout/
 │   │   ├── ai/
 │   │   ├── dashboard/
@@ -155,6 +156,7 @@ studio/
 │   ├── contexts/
 │   ├── hooks/
 │   └── lib/
+│       └── dashboard-fixtures.ts  # [UI-DASH-001] Mock 차트 데이터
 ├── docs/
 │   └── blueprint.md
 ├── apphosting.yaml
