@@ -4,21 +4,43 @@ import * as React from "react"
 import { Info } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertSettingForm } from "@/components/alert-setting-form"
+import { getAlertSettings, type AlertSettingsInput } from "@/actions/alert-settings"
 
 export default function SettingsPage() {
   const [isLoading, setIsLoading] = React.useState(true)
+  const [isError, setIsError] = React.useState(false)
+  const [settings, setSettings] = React.useState<AlertSettingsInput>({
+    lossLimit: 5,
+    tradeCap: 5,
+  })
 
-  // 컴포넌트 마운트 시 로딩 상태 시뮬레이션
   React.useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 800)
-    return () => clearTimeout(timer)
-  }, [])
+    let cancelled = false
 
-  const handleSave = async (data: { lossLimit: number; tradeCap: number }) => {
-    console.log("Saving Alert Settings:", data)
-    // 실제 API 호출 로직이 들어갈 자리
-    return new Promise<void>((resolve) => setTimeout(resolve, 1000))
-  }
+    async function loadSettings() {
+      try {
+        const data = await getAlertSettings()
+        if (!cancelled) {
+          setSettings(data)
+          setIsError(false)
+        }
+      } catch {
+        if (!cancelled) {
+          setIsError(true)
+        }
+      } finally {
+        if (!cancelled) {
+          setIsLoading(false)
+        }
+      }
+    }
+
+    loadSettings()
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -33,10 +55,10 @@ export default function SettingsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
-          {/* 새롭게 구현된 알람 설정 폼 */}
-          <AlertSettingForm 
-            isLoading={isLoading} 
-            onSave={handleSave} 
+          <AlertSettingForm
+            defaultValues={settings}
+            isLoading={isLoading}
+            isError={isError}
           />
         </div>
 
@@ -48,7 +70,7 @@ export default function SettingsPage() {
               Statistically, trading after a 2.5% drawdown leads to a 60% higher probability of further loss due to emotional fatigue.
             </AlertDescription>
           </Alert>
-          
+
           <div className="p-6 rounded-xl border border-primary/20 bg-primary/5 overflow-hidden relative group">
             <div className="absolute top-0 left-0 h-1 bg-primary w-full group-hover:bg-accent transition-colors" />
             <h3 className="text-lg font-bold mb-2">Risk Strategy</h3>

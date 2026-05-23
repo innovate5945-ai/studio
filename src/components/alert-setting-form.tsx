@@ -11,27 +11,38 @@ import { useToast } from "@/hooks/use-toast"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Skeleton } from "@/components/ui/skeleton"
 import { cn } from "@/lib/utils"
+import { saveAlertSettings, type AlertSettingsInput } from "@/actions/alert-settings"
 
 interface AlertSettingFormProps {
-  isLoading?: boolean;
-  isError?: boolean;
-  onSave?: (data: { lossLimit: number; tradeCap: number }) => Promise<void> | void;
+  defaultValues?: AlertSettingsInput
+  isLoading?: boolean
+  isError?: boolean
 }
 
 /**
  * @fileOverview [UI-ALERT-001] 알람 설정 화면 컴포넌트
  * 사용자의 매매 기강을 위해 리스크 관리 기준(손실폭, 매매횟수)을 설정하는 폼입니다.
+ * 저장은 Next.js Server Action(`saveAlertSettings`)을 통해 처리됩니다.
  */
-export function AlertSettingForm({ isLoading, isError, onSave }: AlertSettingFormProps) {
+export function AlertSettingForm({
+  defaultValues = { lossLimit: 5, tradeCap: 5 },
+  isLoading,
+  isError,
+}: AlertSettingFormProps) {
   const { toast } = useToast()
-  const [lossLimit, setLossLimit] = React.useState([5])
-  const [tradeCap, setTradeCap] = React.useState("5")
+  const [lossLimit, setLossLimit] = React.useState([defaultValues.lossLimit])
+  const [tradeCap, setTradeCap] = React.useState(String(defaultValues.tradeCap))
   const [inputError, setInputError] = React.useState("")
   const [isSaving, setIsSaving] = React.useState(false)
 
-  // 매매 횟수 유효성 검사
+  React.useEffect(() => {
+    setLossLimit([defaultValues.lossLimit])
+    setTradeCap(String(defaultValues.tradeCap))
+    setInputError("")
+  }, [defaultValues.lossLimit, defaultValues.tradeCap])
+
   const validate = (value: string) => {
-    const num = parseInt(value)
+    const num = parseInt(value, 10)
     if (value.trim() === "" || isNaN(num) || num < 1) {
       setInputError("⚠ 매매 횟수는 최소 1회 이상 입력해야 합니다.")
       return false
@@ -48,18 +59,28 @@ export function AlertSettingForm({ isLoading, isError, onSave }: AlertSettingFor
 
   const handleSave = async () => {
     if (!validate(tradeCap)) return
-    
+
     setIsSaving(true)
     try {
-      if (onSave) {
-        await onSave({ lossLimit: lossLimit[0], tradeCap: parseInt(tradeCap) })
+      const result = await saveAlertSettings({
+        lossLimit: lossLimit[0],
+        tradeCap: parseInt(tradeCap, 10),
+      })
+
+      if (!result.success) {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: result.error,
+        })
+        return
       }
 
       toast({
         title: "Success",
         description: "설정이 성공적으로 저장되었습니다.",
       })
-    } catch (error) {
+    } catch {
       toast({
         variant: "destructive",
         title: "Error",
@@ -70,7 +91,6 @@ export function AlertSettingForm({ isLoading, isError, onSave }: AlertSettingFor
     }
   }
 
-  // 로딩 상태 처리 (스켈레톤 UI)
   if (isLoading) {
     return (
       <Card className="border-white/5 bg-card/50 backdrop-blur-sm">
@@ -99,7 +119,6 @@ export function AlertSettingForm({ isLoading, isError, onSave }: AlertSettingFor
 
   return (
     <div className="space-y-6">
-      {/* 에러 알림 배너 */}
       {isError && (
         <Alert variant="destructive" className="bg-destructive/10 border-destructive/20">
           <AlertCircle className="h-4 w-4" />
@@ -119,7 +138,6 @@ export function AlertSettingForm({ isLoading, isError, onSave }: AlertSettingFor
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-10 pt-8">
-          {/* 1. 손실폭 설정 슬라이더 */}
           <div className="space-y-5">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <Label className="text-sm font-bold text-muted-foreground uppercase tracking-wider">손실폭 설정</Label>
@@ -142,7 +160,6 @@ export function AlertSettingForm({ isLoading, isError, onSave }: AlertSettingFor
             </div>
           </div>
 
-          {/* 2. 매매횟수 상한 입력 필드 */}
           <div className="space-y-4">
             <Label htmlFor="trade-cap" className="text-sm font-bold text-muted-foreground uppercase tracking-wider">
               매매횟수 상한
@@ -166,7 +183,6 @@ export function AlertSettingForm({ isLoading, isError, onSave }: AlertSettingFor
                 </span>
               </div>
             </div>
-            {/* 인라인 에러 메시지 */}
             {inputError && (
               <p className="text-xs font-bold text-destructive flex items-center gap-1.5 animate-in fade-in slide-in-from-top-1 duration-200">
                 <AlertCircle className="w-3 h-3" />
@@ -176,8 +192,8 @@ export function AlertSettingForm({ isLoading, isError, onSave }: AlertSettingFor
           </div>
         </CardContent>
         <CardFooter className="bg-white/5 border-t border-white/5 p-6">
-          <Button 
-            onClick={handleSave} 
+          <Button
+            onClick={handleSave}
             disabled={hasValidationError || isSaving}
             className="w-full font-bold h-14 text-lg shadow-lg shadow-primary/20 transition-all"
           >
