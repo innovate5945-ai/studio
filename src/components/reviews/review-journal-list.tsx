@@ -1,13 +1,17 @@
 "use client"
 
-import { getReviewJournals } from "@/lib/review-fixtures"
+import { getReviewJournals, type ReviewJournalEntry } from "@/lib/review-fixtures"
 import { ReviewJournalCard } from "@/components/reviews/review-journal-card"
+
+type ReviewJournalListProps = {
+  entries?: ReviewJournalEntry[]
+}
 
 /**
  * @fileOverview [UI-REVIEW-001] 복기 일지 날짜별 카드 리스트
  */
-export function ReviewJournalList() {
-  const journals = getReviewJournals()
+export function ReviewJournalList({ entries }: ReviewJournalListProps) {
+  const journals = entries ?? getReviewJournals()
 
   return (
     <div className="space-y-4" data-testid="review-journal-list">
@@ -18,4 +22,4 @@ export function ReviewJournalList() {
   )
 }
 
-export { getReviewJournals };
+export { getReviewJournals }

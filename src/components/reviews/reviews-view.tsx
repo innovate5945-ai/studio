@@ -5,7 +5,6 @@ import { Search, Timer } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { getReviewJournals } from "@/lib/review-fixtures"
 import { ReviewJournalList } from "@/components/reviews/review-journal-list"
-import { ReviewJournalCard } from "@/components/reviews/review-journal-card"
 
 /**
  * @fileOverview [UI-REVIEW-001] 복기 일지 목록 화면
@@ -56,11 +55,7 @@ export function ReviewsView() {
           검색 결과가 없습니다.
         </p>
       ) : (
-        <div className="space-y-4" data-testid="review-journal-list">
-          {filtered.map((entry) => (
-            <ReviewJournalCard key={entry.id} entry={entry} />
-          ))}
-        </div>
+        <ReviewJournalList entries={filtered} />
       )}
     </div>
   )

@@ -1,5 +1,6 @@
 import { render, screen, within, fireEvent } from '@testing-library/react';
 import { ReviewsView } from '@/components/reviews/reviews-view';
+import { getReviewJournals } from '@/lib/review-fixtures';
 
 jest.mock('next/link', () => ({
   __esModule: true,
@@ -57,5 +58,19 @@ describe('ReviewsView', () => {
     });
 
     expect(screen.getByTestId('review-empty-state')).toBeInTheDocument();
+  });
+
+  it('모든 일지 카드에 3분 스캔용 핵심 요약 정보가 누락 없이 표시되어야 합니다.', () => {
+    render(<ReviewsView />);
+
+    getReviewJournals().forEach((entry) => {
+      const card = screen.getByTestId(`review-journal-card-${entry.id}`);
+      expect(within(card).getByText(/당일 수익률/i)).toBeInTheDocument();
+      expect(within(card).getByText(/주요 규율 위반 키워드/i)).toBeInTheDocument();
+      expect(within(card).getByText(/AI 한줄평/i)).toBeInTheDocument();
+      expect(within(card).getByTestId(`review-ai-summary-${entry.id}`)).toHaveTextContent(
+        entry.aiSummary
+      );
+    });
   });
 });
