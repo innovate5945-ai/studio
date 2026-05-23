@@ -122,35 +122,41 @@ $env:NODE_ENV="production"; npm run build
 ```
 studio/
 ├── src/
-│   ├── app/                    # Next.js App Router 페이지
-│   │   ├── page.tsx            # 대시보드 (Command Center)
-│   │   ├── review/             # Trade Logs
-│   │   ├── reports/            # Analytics
-│   │   ├── upload/             # CSV Upload
-│   │   ├── settings/           # Discipline Thresholds
-│   │   ├── audit/              # Audit Trail
-│   │   └── system/             # System Settings
+│   ├── app/
+│   │   ├── layout.tsx          # Root layout (providers)
+│   │   ├── (auth)/             # [UI-AUTH-001] 인증 (사이드바 없음)
+│   │   │   ├── login/page.tsx
+│   │   │   └── register/page.tsx
+│   │   └── (dashboard)/        # 메인 대시보드
+│   │       ├── page.tsx        # Command Center
+│   │       ├── review/         # Trade Logs
+│   │       ├── reports/        # Analytics
+│   │       ├── upload/         # CSV Upload
+│   │       ├── settings/       # Discipline Thresholds
+│   │       ├── audit/          # Audit Trail
+│   │       └── system/         # System Settings
 │   ├── actions/
-│   │   ├── alert-settings.ts   # [UI-ALERT-001] 알람 설정 Server Action
-│   │   └── discipline-cooldown.ts  # [UI-ALERT-002] 쿨타임 Server Action
-│   ├── contexts/
-│   │   └── discipline-provider.tsx # [UI-ALERT-002] 규율 위반 상태 관리
+│   │   ├── alert-settings.ts   # [UI-ALERT-001]
+│   │   ├── discipline-cooldown.ts  # [UI-ALERT-002]
+│   │   └── auth.ts             # [UI-AUTH-001]
 │   ├── ai/
-│   │   ├── genkit.ts           # Genkit + Gemini 설정
-│   │   ├── dev.ts              # Genkit dev 진입점
+│   │   ├── genkit.ts
+│   │   ├── dev.ts
 │   │   └── flows/
-│   │       └── ai-reality-check-fact-bomb.ts  # Fact-Bomb Server Action
+│   │       └── ai-reality-check-fact-bomb.ts
 │   ├── components/
-│   │   ├── layout/             # 사이드바 등 레이아웃
-│   │   ├── ai/                 # Fact-Bomb 모달
-│   │   ├── dashboard/          # Cooldown 배너 등
-│   │   └── ui/                 # shadcn/ui 컴포넌트
+│   │   ├── auth/               # [UI-AUTH-001] 로그인/회원가입 폼
+│   │   ├── layout/
+│   │   ├── ai/
+│   │   ├── dashboard/
+│   │   └── ui/
+│   ├── contexts/
 │   ├── hooks/
 │   └── lib/
 ├── docs/
-│   └── blueprint.md            # PRD / 기능 명세
-├── apphosting.yaml             # Firebase App Hosting 설정
-├── .idx/dev.nix                # Firebase Studio 워크스pace 설정
+│   └── blueprint.md
+├── apphosting.yaml
+├── .idx/dev.nix
 └── package.json
 ```
 

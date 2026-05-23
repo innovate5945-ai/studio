@@ -107,9 +107,11 @@ export function AppSidebar() {
       <SidebarFooter className="p-4 border-t border-white/5">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton className="text-destructive hover:text-destructive/80">
-              <LogOut className="w-5 h-5" />
-              <span>Logout</span>
+            <SidebarMenuButton asChild className="text-destructive hover:text-destructive/80">
+              <Link href="/login">
+                <LogOut className="w-5 h-5" />
+                <span>Logout</span>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
