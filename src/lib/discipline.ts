@@ -3,11 +3,12 @@
  * @overview [UI-ALERT-002] 규율 breach 평가·쿨타임 포맷·localStorage 동기화 (클라이언트 순수 함수).
  *
  * @call-flow
- * 1. DisciplineProvider: evaluateDisciplineBreach(sessionMetrics, settings)
- * 2. breach 시 → startDisciplineCooldown (actions) → writeStoredCooldown
- * 3. CooldownBanner: formatCooldownTime(timeLeft)
+ * 1. DisciplineProvider.bootstrap → readStoredCooldown / writeStoredCooldown
+ * 2. evaluateDisciplineBreach(sessionMetrics, settings) — breach 판정
+ * 3. breach 시 → startDisciplineCooldown (actions) → writeStoredCooldown
+ * 4. CooldownBanner → formatCooldownTime(timeLeft)
  *
- * @see src/contexts/discipline-provider.tsx
+ * @see src/contexts/discipline-provider.tsx, src/lib/discipline-cooldown.ts
  */
 import type { AlertSettingsInput } from '@/lib/alert-settings';
 import type { BreachType } from '@/lib/discipline-cooldown';

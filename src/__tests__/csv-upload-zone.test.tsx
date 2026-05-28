@@ -1,4 +1,11 @@
 // @file src/__tests__/csv-upload-zone.test.tsx
+/**
+ * @overview [UI-CSV-001] csv-upload-zone.test.tsx — CsvUploadZone 단위/통합 테스트.
+ *
+ * @call-flow
+ * 1. render/mount CsvUploadZone
+ * 2. assert UI states + interactions
+ */
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import { CsvUploadZone } from '@/components/upload/csv-upload-zone';
 import { processCsvUpload } from '@/actions/csv-upload';
@@ -20,9 +27,7 @@ function createFile(name: string, type: string, content = 'date,symbol') {
   return new File([content], name, { type });
 }
 
-/**
- * @fileOverview [UI-CSV-001] CsvUploadZone 테스트
- */
+
 describe('CsvUploadZone', () => {
   beforeEach(() => {
     jest.clearAllMocks();

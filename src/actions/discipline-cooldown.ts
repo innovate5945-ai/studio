@@ -5,12 +5,13 @@
  * @overview [UI-ALERT-002] 규율 쿨타임 Server Actions — 위반 시 30분 강제 휴식 상태 관리 (in-memory mock).
  *
  * @call-flow
- * 1. DisciplineProvider.bootstrap → getDisciplineCooldown()
- * 2. evaluateDisciplineBreach → startDisciplineCooldown({ breachType, reason })
- * 3. CooldownBanner ← useDiscipline().cooldown / timeLeft
+ * 1. DisciplineProvider.bootstrap → getDisciplineCooldown() + readStoredCooldown (client lib)
+ * 2. evaluateDisciplineBreach → startDisciplineCooldown → writeStoredCooldown (client lib)
+ * 3. CooldownBanner ← useDiscipline() — formatCooldownTime(timeLeft)
+ * 4. clearDisciplineCooldown — mock/테스트용 수동 해제
  *
  * @constraints "use server" — async function만 export. 타입/스키마는 lib/discipline-cooldown.ts.
- * @see src/contexts/discipline-provider.tsx
+ * @see src/lib/discipline-cooldown.ts, src/lib/discipline.ts, src/contexts/discipline-provider.tsx, src/components/dashboard/cooldown-banner.tsx
  */
 import {
   COOLDOWN_DURATION_SECONDS,

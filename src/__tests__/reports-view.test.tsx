@@ -1,10 +1,15 @@
 // @file src/__tests__/reports-view.test.tsx
+/**
+ * @overview [UI-DASH-002] reports-view.test.tsx — ReportsView 단위/통합 테스트.
+ *
+ * @call-flow
+ * 1. render/mount ReportsView
+ * 2. assert UI states + interactions
+ */
 import { render, screen, fireEvent, within } from '@testing-library/react';
 import { ReportsView } from '@/components/reports/reports-view';
 
-/**
- * @fileOverview [UI-DASH-002] ReportsView 통합 테스트
- */
+
 describe('ReportsView', () => {
   it('기본 주간 리포트 탭과 카드 리스트를 렌더링해야 합니다.', () => {
     render(<ReportsView />);

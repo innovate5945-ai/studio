@@ -1,6 +1,16 @@
 "use client"
 
 // @file src/components/dashboard/dashboard-analytics.tsx
+/**
+ * @overview [UI-DASH-001] 대시보드 성과 분석 섹션 — KPI 카드 + 3종 차트.
+ *
+ * @call-flow
+ * 1. dashboard/page → DashboardAnalytics
+ * 2. PeriodFilter → getDashboardData(period) (lib fixture)
+ * 3. SummaryMetric 4종 + WinRateDonutChart + MddLineChart + TradeCountBarChart
+ *
+ * @see src/lib/dashboard-fixtures.ts, src/app/(dashboard)/page.tsx
+ */
 import * as React from "react"
 import { TrendingUp, Target, Activity, Calendar } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
@@ -17,10 +27,8 @@ import { WinRateDonutChart } from "@/components/dashboard/win-rate-donut-chart"
 import { MddLineChart } from "@/components/dashboard/mdd-line-chart"
 import { TradeCountBarChart } from "@/components/dashboard/trade-count-bar-chart"
 
-/**
- * @fileOverview [UI-DASH-001] 통합 대시보드 분석 섹션
- * 기간 필터 + 승률(%) / MDD(%) / 매매횟수(회) / 순손익(원) 차트
- */
+
+/** 기간 필터·KPI·차트를 묶는 대시보드 분석 섹션. */
 export function DashboardAnalytics() {
   const [period, setPeriod] = React.useState<DashboardPeriod>("1w")
   const data = React.useMemo(() => getDashboardData(period), [period])

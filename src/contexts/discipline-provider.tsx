@@ -6,11 +6,13 @@
  *
  * @call-flow
  * 1. bootstrap: getAlertSettings ∥ getDisciplineCooldown → readStoredCooldown merge → applyCooldown
- * 2. session active: recordTrade/addLoss → evaluateDisciplineBreach → triggerBreach
+ * 2. session active: recordTrade / addLoss → evaluateDisciplineBreach → triggerBreach
  * 3. triggerBreach: startDisciplineCooldown → applyCooldown → setIsFactBombOpen(true)
  * 4. cooldown tick: getRemainingSeconds → 만료 시 clearStoredCooldown
+ * 5. useDiscipline() — CooldownBanner, FactBombModal 등 하위 component 소비
  *
- * @see src/app/layout.tsx (Provider wrap), src/components/dashboard/cooldown-banner.tsx
+ * @see src/actions/alert-settings.ts, src/actions/discipline-cooldown.ts, src/lib/discipline.ts,
+ *      src/app/layout.tsx, src/components/dashboard/cooldown-banner.tsx, src/components/ai/fact-bomb-modal.tsx
  */
 import * as React from "react"
 import { getAlertSettings } from "@/actions/alert-settings"

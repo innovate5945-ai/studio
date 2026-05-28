@@ -1,4 +1,11 @@
 // @file src/__tests__/report-fixtures.test.ts
+/**
+ * @overview [UI-DASH-002] report-fixtures.test.ts — lib/report-fixtures 단위/통합 테스트.
+ *
+ * @call-flow
+ * 1. render/mount lib/report-fixtures
+ * 2. assert UI states + interactions
+ */
 import { getReportData, formatReportPnl } from '@/lib/report-fixtures';
 
 describe('report-fixtures', () => {

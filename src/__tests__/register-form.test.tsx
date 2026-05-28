@@ -1,4 +1,11 @@
 // @file src/__tests__/register-form.test.tsx
+/**
+ * @overview [UI-AUTH-001] register-form.test.tsx — RegisterForm 단위/통합 테스트.
+ *
+ * @call-flow
+ * 1. render/mount RegisterForm
+ * 2. assert UI states + interactions
+ */
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { RegisterForm } from '@/components/auth/register-form';
 import { registerUser } from '@/actions/auth';
@@ -26,9 +33,7 @@ jest.mock('@/actions/auth', () => ({
 
 const mockRegisterUser = registerUser as jest.MockedFunction<typeof registerUser>;
 
-/**
- * @fileOverview [UI-AUTH-001] RegisterForm 테스트
- */
+
 describe('RegisterForm', () => {
   beforeEach(() => {
     jest.clearAllMocks();

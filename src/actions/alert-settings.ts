@@ -5,12 +5,12 @@
  * @overview [UI-ALERT-001] 알람 설정 Server Actions — 손실폭·매매횟수 임계값 조회/저장 (in-memory mock).
  *
  * @call-flow
- * 1. SettingsPage mount → getAlertSettings()
- * 2. AlertSettingForm 저장 → saveAlertSettings(input)
- *    → AlertSettingsSchema.safeParse (lib/alert-settings) → cachedSettings 갱신
+ * 1. settings/page → AlertSettingForm mount → getAlertSettings()
+ * 2. 폼 저장 → saveAlertSettings(input)
+ * 3. AlertSettingsSchema.safeParse (lib) → 성공 시 cachedSettings 갱신 / 실패 시 error 반환
  *
  * @constraints "use server" — async function만 export. 스키마/타입은 lib/alert-settings.ts.
- * @see src/lib/alert-settings.ts
+ * @see src/lib/alert-settings.ts, src/components/alert-setting-form.tsx, src/app/(dashboard)/settings/page.tsx
  */
 import {
   AlertSettingsSchema,

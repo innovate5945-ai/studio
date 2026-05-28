@@ -1,6 +1,15 @@
 "use client"
 
 // @file src/components/dashboard/trade-count-bar-chart.tsx
+/**
+ * @overview [UI-DASH-001] 매매 횟수 바 차트 — Recharts BarChart.
+ *
+ * @call-flow
+ * 1. DashboardAnalytics → getDashboardData(period).tradeSeries
+ * 2. TradeCountBarChart({ series, totalTrades }) → BarChart + formatTradeCount
+ *
+ * @see src/lib/dashboard-fixtures.ts, src/components/dashboard/dashboard-analytics.tsx
+ */
 import {
   BarChart,
   Bar,
@@ -18,9 +27,8 @@ type TradeCountBarChartProps = {
   totalTrades: number
 }
 
-/**
- * @fileOverview [UI-DASH-001] 매매횟수 막대 차트 (회)
- */
+
+/** 기간별 매매 횟수 바 차트 카드. */
 export function TradeCountBarChart({ series, totalTrades }: TradeCountBarChartProps) {
   return (
     <Card className="border-white/5 bg-card/50 backdrop-blur-md" data-testid="trade-count-chart">

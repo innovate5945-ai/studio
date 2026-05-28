@@ -1,6 +1,15 @@
 "use client"
 
 // @file src/components/dashboard/win-rate-donut-chart.tsx
+/**
+ * @overview [UI-DASH-001] 승률 도넛 차트 — Win/Loss PieChart.
+ *
+ * @call-flow
+ * 1. DashboardAnalytics → getDashboardData(period).winRate / winCount / lossCount
+ * 2. WinRateDonutChart → PieChart + 중앙 formatWinRate 표시
+ *
+ * @see src/lib/dashboard-fixtures.ts, src/components/dashboard/dashboard-analytics.tsx
+ */
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { formatWinRate } from "@/lib/dashboard-fixtures"
@@ -16,9 +25,8 @@ const COLORS = {
   loss: "hsl(var(--destructive))",
 };
 
-/**
- * @fileOverview [UI-DASH-001] 승률 도넛 차트 (%)
- */
+
+/** 승/패 분포 도넛 차트 카드. */
 export function WinRateDonutChart({ winRate, winCount, lossCount }: WinRateDonutChartProps) {
   const chartData = [
     { name: "승", value: winCount, fill: COLORS.win },

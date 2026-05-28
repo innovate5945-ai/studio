@@ -1,11 +1,13 @@
 // @file src/app/(dashboard)/layout.tsx
 /**
- * @overview Dashboard Layout — Sidebar, CooldownBanner, FactBombAlertModal, main content area.
+ * @overview Dashboard Layout — SidebarProvider, AppSidebar, CooldownBanner, FactBombAlertModal.
  *
  * @call-flow
- * (dashboard)/layout → AppSidebar + CooldownBanner + {children}
+ * 1. Root layout DisciplineProvider 하위 — (dashboard)/* routes
+ * 2. SidebarProvider → AppSidebar + main {children}
+ * 3. CooldownBanner (sticky) + FactBombAlertModal (portal)
  *
- * @see src/components/layout/app-sidebar.tsx
+ * @see src/app/layout.tsx, src/components/layout/app-sidebar.tsx, src/components/dashboard/cooldown-banner.tsx
  */
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/layout/app-sidebar";

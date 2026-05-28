@@ -1,4 +1,13 @@
 // @file src/components/auth/auth-form-layout.tsx
+/**
+ * @overview [UI-AUTH-001] 인증 페이지 공통 레이아웃 — 브랜딩·Card·footer 슬롯.
+ *
+ * @call-flow
+ * 1. login/page | register/page → AuthFormLayout { title, description, footer }
+ * 2. IronTrader 로고 + CardHeader + children (LoginForm | RegisterForm)
+ *
+ * @see src/app/(auth)/login/page.tsx, src/app/(auth)/register/page.tsx
+ */
 import Link from "next/link"
 import { ShieldAlert } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -10,9 +19,8 @@ type AuthFormLayoutProps = {
   footer: React.ReactNode
 }
 
-/**
- * @fileOverview [UI-AUTH-001] 인증 페이지 공통 레이아웃 (Mobile-first)
- */
+
+/** 로그인·회원가입 페이지 공통 Card 레이아웃. */
 export function AuthFormLayout({ title, description, children, footer }: AuthFormLayoutProps) {
   return (
     <div className="flex min-h-screen w-full flex-col items-center justify-center bg-background px-4 py-8 sm:px-6 lg:px-8">

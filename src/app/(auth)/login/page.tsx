@@ -1,4 +1,14 @@
 // @file src/app/(auth)/login/page.tsx
+/**
+ * @overview [UI-AUTH-001] 로그인 페이지 — AuthFormLayout + LoginForm.
+ *
+ * @call-flow
+ * 1. /login → LoginPage (metadata)
+ * 2. AuthFormLayout → LoginForm
+ * 3. submit → loginUser (action) → toast + router.push("/")
+ *
+ * @see src/components/auth/login-form.tsx, src/components/auth/auth-form-layout.tsx, src/actions/auth.ts
+ */
 import type { Metadata } from "next"
 import { AuthFormLayout } from "@/components/auth/auth-form-layout"
 import { LoginForm } from "@/components/auth/login-form"

@@ -1,6 +1,16 @@
 "use client"
 
 // @file src/components/reports/report-card-list.tsx
+/**
+ * @overview [UI-DASH-002] 리포트 카드 그리드 — 기간별 KPI 스냅샷 목록.
+ *
+ * @call-flow
+ * 1. ReportsView → getReportData(type).cards
+ * 2. ReportCardList({ cards }) → ReportCard 그리드
+ * 3. formatReportPnl / formatReportWinRate — netPnl·승률 표시
+ *
+ * @see src/lib/report-fixtures.ts, src/components/reports/reports-view.tsx
+ */
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
@@ -15,9 +25,8 @@ type ReportCardListProps = {
   cards: ReportCardItem[]
 }
 
-/**
- * @fileOverview [UI-DASH-002] 리포트 카드 리스트
- */
+
+/** 리포트 카드 항목을 2열 그리드로 렌더링합니다. */
 export function ReportCardList({ cards }: ReportCardListProps) {
   return (
     <div

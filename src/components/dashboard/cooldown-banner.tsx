@@ -5,9 +5,11 @@
  * @overview [UI-ALERT-002] 쿨타임 sticky 배너 — 규율 위반 시 남은 시간 카운트다운 표시.
  *
  * @call-flow
- * DisciplineProvider.cooldown.active → CooldownBanner render → formatCooldownTime(timeLeft)
+ * 1. dashboard layout — CooldownBanner (전역 sticky)
+ * 2. useDiscipline() — cooldown.active, timeLeft, breachType
+ * 3. formatCooldownTime(timeLeft) — MM:SS 표시
  *
- * @see src/contexts/discipline-provider.tsx
+ * @see src/contexts/discipline-provider.tsx, src/lib/discipline.ts
  */
 import * as React from "react"
 import { Timer, AlertTriangle } from "lucide-react"

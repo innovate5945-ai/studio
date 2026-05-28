@@ -1,4 +1,11 @@
 // @file src/__tests__/login-form.test.tsx
+/**
+ * @overview [UI-AUTH-001] login-form.test.tsx — LoginForm 단위/통합 테스트.
+ *
+ * @call-flow
+ * 1. render/mount LoginForm
+ * 2. assert UI states + interactions
+ */
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { LoginForm } from '@/components/auth/login-form';
 import { loginUser } from '@/actions/auth';
@@ -26,9 +33,7 @@ jest.mock('@/actions/auth', () => ({
 
 const mockLoginUser = loginUser as jest.MockedFunction<typeof loginUser>;
 
-/**
- * @fileOverview [UI-AUTH-001] LoginForm 테스트
- */
+
 describe('LoginForm', () => {
   beforeEach(() => {
     jest.clearAllMocks();

@@ -5,11 +5,12 @@
  * @overview [UI-AUTH-001] 인증 Server Actions — 로그인/회원가입 mock 처리.
  *
  * @call-flow
- * 1. LoginForm submit → loginUser(input) → loginSchema.safeParse (lib/auth-validation)
- * 2. RegisterForm submit → registerUser(input) → registerSchema.safeParse
+ * 1. login/page → LoginForm submit → loginUser(input)
+ * 2. register/page → RegisterForm submit → registerUser(input)
+ * 3. loginSchema / registerSchema.safeParse (lib) → AuthResult { success, message | error }
  *
- * @constraints "use server" — async function만 export. AuthResult 타입은 lib/auth-validation.ts.
- * @see src/components/auth/login-form.tsx, register-form.tsx
+ * @constraints "use server" — async function만 export. 스키마/타입은 lib/auth-validation.ts.
+ * @see src/lib/auth-validation.ts, src/components/auth/login-form.tsx, src/components/auth/register-form.tsx
  */
 import {
   loginSchema,

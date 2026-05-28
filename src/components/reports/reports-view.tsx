@@ -1,6 +1,16 @@
 "use client"
 
 // @file src/components/reports/reports-view.tsx
+/**
+ * @overview [UI-DASH-002] 리포트 메인 뷰 — 주간/월간 성과 리포트 페이지 본문.
+ *
+ * @call-flow
+ * 1. reports/page → ReportsView
+ * 2. ReportTypeTabs → getReportData(reportType) (lib fixture)
+ * 3. ReportDetailPanel + ReportCardList — analysis·카드 그리드
+ *
+ * @see src/lib/report-fixtures.ts, src/app/(dashboard)/reports/page.tsx
+ */
 import * as React from "react"
 import { Download, Share2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -10,9 +20,8 @@ import { ReportTypeTabs } from "@/components/reports/report-type-tabs"
 import { ReportCardList } from "@/components/reports/report-card-list"
 import { ReportDetailPanel } from "@/components/reports/report-detail-panel"
 
-/**
- * @fileOverview [UI-DASH-002] 주간/월간 리포트 조회 화면
- */
+
+/** 주간/월간 리포트 탭·상세·카드 목록을 묶는 메인 뷰. */
 export function ReportsView() {
   const [reportType, setReportType] = React.useState<ReportType>("weekly")
   const report = React.useMemo(() => getReportData(reportType), [reportType])

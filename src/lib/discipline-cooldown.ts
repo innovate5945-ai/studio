@@ -3,9 +3,12 @@
  * @overview [UI-ALERT-002] 쿨타임 상태 타입·Zod 스키마·상수. Server Action과 UI 공유.
  *
  * @call-flow
- * startDisciplineCooldown → StartCooldownSchema.safeParse → endsAt = now + COOLDOWN_DURATION_SECONDS
+ * 1. evaluateDisciplineBreach (lib/discipline) → breach 감지
+ * 2. startDisciplineCooldown → StartCooldownSchema.safeParse
+ * 3. endsAt = Date.now() + COOLDOWN_DURATION_SECONDS
+ * 4. CooldownBanner ← useDiscipline().cooldown
  *
- * @see src/actions/discipline-cooldown.ts
+ * @see src/actions/discipline-cooldown.ts, src/contexts/discipline-provider.tsx
  */
 import { z } from 'zod';
 

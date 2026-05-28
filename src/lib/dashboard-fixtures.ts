@@ -1,7 +1,13 @@
 // @file src/lib/dashboard-fixtures.ts
 /**
- * @overview [UI-DASH-001] 대시보드 차트 mock 데이터·포맷 헬퍼.
- * @call-flow DashboardAnalytics → getDashboardData(period) → SummaryMetric + charts
+ * @overview [UI-DASH-001] 대시보드 차트 mock 데이터·한국어 포맷 헬퍼.
+ *
+ * @call-flow
+ * 1. DashboardAnalytics → getDashboardData(period)
+ * 2. SummaryMetric → formatWinRate / formatKrw / formatMdd / formatTradeCount
+ * 3. WinRateDonutChart / MddLineChart / TradeCountBarChart — fixture series 소비
+ *
+ * @see src/components/dashboard/dashboard-analytics.tsx
  */
 export type DashboardPeriod = '1w' | '1m' | '3m';
 
@@ -107,6 +113,7 @@ const DASHBOARD_FIXTURES: Record<DashboardPeriod, DashboardFixture> = {
   },
 };
 
+/** 기간별 대시보드 mock fixture를 반환합니다. */
 export function getDashboardData(period: DashboardPeriod): DashboardFixture {
   return DASHBOARD_FIXTURES[period];
 }

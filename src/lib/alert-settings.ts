@@ -3,7 +3,9 @@
  * @overview [UI-ALERT-001] 알람 설정 Zod 스키마·타입·기본값. Server Action과 UI 공유.
  *
  * @call-flow
- * actions/alert-settings.ts → AlertSettingsSchema.safeParse → cachedSettings
+ * 1. SettingsPage / DisciplineProvider → getAlertSettings (actions)
+ * 2. AlertSettingForm → saveAlertSettings(input)
+ * 3. AlertSettingsSchema.safeParse → cachedSettings 갱신
  *
  * @see src/actions/alert-settings.ts, src/components/alert-setting-form.tsx
  */

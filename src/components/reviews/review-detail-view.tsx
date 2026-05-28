@@ -1,6 +1,16 @@
 "use client"
 
 // @file src/components/reviews/review-detail-view.tsx
+/**
+ * @overview [UI-REVIEW-002] 복기 일지 상세 뷰 — 타임라인 차트 + AI 심층 분석.
+ *
+ * @call-flow
+ * 1. review/[id]/page → ReviewDetailView → useParams().id
+ * 2. getReviewJournalById(id) — 없으면 not-found UI
+ * 3. ReviewTimelineChart + ReviewInsightsPanel — detail mock 렌더
+ *
+ * @see src/lib/review-detail-fixtures.ts, src/app/(dashboard)/review/[id]/page.tsx
+ */
 import Link from "next/link"
 import { useParams, useRouter } from "next/navigation"
 import { ArrowLeft, Calendar, TrendingDown, TrendingUp } from "lucide-react"
@@ -13,9 +23,8 @@ import { getReviewJournalById } from "@/lib/review-detail-fixtures"
 import { ReviewTimelineChart } from "@/components/reviews/review-timeline-chart"
 import { ReviewInsightsPanel } from "@/components/reviews/review-insights-panel"
 
-/**
- * @fileOverview [UI-REVIEW-002] 복기 일지 상세 대시보드
- */
+
+/** URL id로 복기 일지 상세(차트·AI 분석)를 렌더링합니다. */
 export function ReviewDetailView() {
   const router = useRouter()
   const params = useParams()

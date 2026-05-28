@@ -1,6 +1,16 @@
 "use client"
 
 // @file src/app/(dashboard)/settings/page.tsx
+/**
+ * @overview [UI-ALERT-001] Discipline Thresholds 설정 페이지 — 알람 임계값 조회·저장.
+ *
+ * @call-flow
+ * 1. /settings → mount → getAlertSettings()
+ * 2. AlertSettingForm({ defaultValues, isLoading, isError })
+ * 3. 저장 → saveAlertSettings → toast 피드백
+ *
+ * @see src/actions/alert-settings.ts, src/components/alert-setting-form.tsx
+ */
 import * as React from "react"
 import { Info } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"

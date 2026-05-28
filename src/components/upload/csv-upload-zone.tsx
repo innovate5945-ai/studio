@@ -1,6 +1,16 @@
 "use client"
 
 // @file src/components/upload/csv-upload-zone.tsx
+/**
+ * @overview [UI-CSV-001] CSV 드래그앤드롭 업로드 존 — 클라이언트 검증 + Server Action ingest.
+ *
+ * @call-flow
+ * 1. upload/page → CsvUploadZone — DnD / file picker
+ * 2. getCsvValidationError (lib) → simulateUploadProgress
+ * 3. processCsvUpload (action) → success Dialog / error 상태
+ *
+ * @see src/lib/csv-upload.ts, src/actions/csv-upload.ts, src/app/(dashboard)/upload/page.tsx
+ */
 import * as React from "react"
 import Link from "next/link"
 import {
@@ -50,10 +60,8 @@ const FEATURE_ITEMS = [
   },
 ] as const
 
-/**
- * @fileOverview [UI-CSV-001] CSV 업로드 드래그 앤 드롭 영역
- * 점선 테두리, Drag Over 인터랙션, 프로그레스 시뮬레이션, 인라인 에러, 성공 모달 포함
- */
+
+/** CSV 파일 DnD·선택 업로드 UI — 검증·진행률·결과 Dialog 포함. */
 export function CsvUploadZone() {
   const fileInputRef = React.useRef<HTMLInputElement>(null)
   const dragCounterRef = React.useRef(0)

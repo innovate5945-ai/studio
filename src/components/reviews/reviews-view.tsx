@@ -1,6 +1,16 @@
 "use client"
 
 // @file src/components/reviews/reviews-view.tsx
+/**
+ * @overview [UI-REVIEW-001] 복기 일지 목록 뷰 — 3분 Snap-Scan 저널 + 검색.
+ *
+ * @call-flow
+ * 1. reviews/page → ReviewsView
+ * 2. getReviewJournals (lib) → searchTerm 필터
+ * 3. ReviewJournalList(entries={filtered}) — empty state 처리
+ *
+ * @see src/lib/review-fixtures.ts, src/app/(dashboard)/reviews/page.tsx
+ */
 import * as React from "react"
 import { Search, Timer } from "lucide-react"
 import { Input } from "@/components/ui/input"
@@ -8,9 +18,8 @@ import { PageHeader } from "@/components/layout/page-header"
 import { getReviewJournals } from "@/lib/review-fixtures"
 import { ReviewJournalList } from "@/components/reviews/review-journal-list"
 
-/**
- * @fileOverview [UI-REVIEW-001] 복기 일지 목록 화면
- */
+
+/** 복기 일지 목록·검색·필터를 담는 메인 뷰. */
 export function ReviewsView() {
   const [searchTerm, setSearchTerm] = React.useState("")
   const journals = React.useMemo(() => getReviewJournals(), [])

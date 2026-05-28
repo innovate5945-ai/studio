@@ -1,4 +1,11 @@
 // @file src/__tests__/discipline.test.ts
+/**
+ * @overview [UI-ALERT-002] discipline.test.ts — lib/discipline 단위/통합 테스트.
+ *
+ * @call-flow
+ * 1. render/mount lib/discipline
+ * 2. assert UI states + interactions
+ */
 import {
   evaluateDisciplineBreach,
   formatCooldownTime,

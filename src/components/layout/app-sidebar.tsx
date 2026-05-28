@@ -1,6 +1,16 @@
 "use client"
 
 // @file src/components/layout/app-sidebar.tsx
+/**
+ * @overview 대시보드 사이드바 — mainNav·adminNav 라우트 네비게이션.
+ *
+ * @call-flow
+ * 1. (dashboard)/layout → SidebarProvider → AppSidebar
+ * 2. usePathname() — active route 하이라이트
+ * 3. mainNav (Dashboard, Reviews, Reports, Upload) + adminNav (Settings, Audit, System)
+ *
+ * @see src/app/(dashboard)/layout.tsx, src/components/ui/sidebar.tsx
+ */
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -41,6 +51,7 @@ const adminNav = [
   { name: "System Settings", href: "/system", icon: Settings },
 ]
 
+/** 대시보드 레이아웃 좌측 collapsible 사이드바. */
 export function AppSidebar() {
   const pathname = usePathname()
 

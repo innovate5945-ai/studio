@@ -1,6 +1,16 @@
 "use client"
 
 // @file src/components/reviews/review-insights-panel.tsx
+/**
+ * @overview [UI-REVIEW-002] AI 심층 분석 패널 — headline·인사이트·action items.
+ *
+ * @call-flow
+ * 1. ReviewDetailView → ReviewInsightsPanel({ detail })
+ * 2. aiDeepAnalysis — insightSections, actionItems, psychologySummary
+ * 3. violationKeywords — Badge 목록
+ *
+ * @see src/lib/review-detail-fixtures.ts, src/components/reviews/review-detail-view.tsx
+ */
 import { Bot, BrainCircuit, CheckCircle2, Sparkles } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -11,9 +21,8 @@ type ReviewInsightsPanelProps = {
   detail: ReviewJournalDetail
 }
 
-/**
- * @fileOverview [UI-REVIEW-002] AI 인사이트 및 매매 심리 분석 요약 패널
- */
+
+/** 복기 일지 AI 심층 분석·위반 키워드 패널. */
 export function ReviewInsightsPanel({ detail }: ReviewInsightsPanelProps) {
   const { aiDeepAnalysis, violationKeywords } = detail
 

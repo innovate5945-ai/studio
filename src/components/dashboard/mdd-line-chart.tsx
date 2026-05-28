@@ -1,6 +1,15 @@
 "use client"
 
 // @file src/components/dashboard/mdd-line-chart.tsx
+/**
+ * @overview [UI-DASH-001] MDD(Maximum Drawdown) 라인 차트 — Recharts.
+ *
+ * @call-flow
+ * 1. DashboardAnalytics → getDashboardData(period).mddSeries
+ * 2. MddLineChart({ series, maxMdd }) → LineChart + formatMdd tooltip
+ *
+ * @see src/lib/dashboard-fixtures.ts, src/components/dashboard/dashboard-analytics.tsx
+ */
 import {
   LineChart,
   Line,
@@ -18,9 +27,8 @@ type MddLineChartProps = {
   maxMdd: number
 }
 
-/**
- * @fileOverview [UI-DASH-001] MDD 라인 차트 (%)
- */
+
+/** MDD 시계열 라인 차트 카드. */
 export function MddLineChart({ series, maxMdd }: MddLineChartProps) {
   return (
     <Card className="border-white/5 bg-card/50 backdrop-blur-md" data-testid="mdd-line-chart">

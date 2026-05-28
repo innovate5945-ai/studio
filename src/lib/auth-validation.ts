@@ -1,10 +1,17 @@
 // @file src/lib/auth-validation.ts
 /**
- * @overview [UI-AUTH-001] 로그인/회원가입 Zod 스키마·AuthResult 타입.
- * @call-flow LoginForm/RegisterForm → actions/auth.ts → loginSchema/registerSchema.safeParse
+ * @overview [UI-AUTH-001] 로그인/회원가입 Zod 스키마·AuthResult 타입. Server Action과 UI 공유.
+ *
+ * @call-flow
+ * 1. LoginForm → loginSchema.safeParse (클라이언트)
+ * 2. RegisterForm → registerSchema.safeParse (클라이언트)
+ * 3. actions/auth.ts → loginUser / registerUser 재검증
+ *
+ * @see src/actions/auth.ts, src/components/auth/login-form.tsx
  */
 import { z } from 'zod';
 
+/** 이메일 형식 검증 스키마 */
 export const emailSchema = z
   .string()
   .min(1, '이메일을 입력해 주세요.')

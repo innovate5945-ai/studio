@@ -5,12 +5,12 @@
  * @overview [UI-CSV-001] CSV 업로드 Server Action — 파일 메타 검증 후 mock 파싱 결과 반환.
  *
  * @call-flow
- * 1. CsvUploadZone — 클라이언트: getCsvValidationError (lib/csv-upload)
- * 2. CsvUploadZone — simulateUploadProgress → processCsvUpload({ fileName, fileSize })
- * 3. 성공 시 tradeCount/assetCount mock 반환
+ * 1. upload/page → CsvUploadZone — getCsvValidationError (lib, 클라이언트 선검증)
+ * 2. simulateUploadProgress → processCsvUpload({ fileName, fileSize })
+ * 3. ProcessCsvSchema.safeParse → .csv 확장자 확인 → tradeCount/assetCount mock 반환
  *
  * @constraints "use server" — async function만 export. CsvUploadResult 타입은 lib/csv-upload.ts.
- * @see src/components/upload/csv-upload-zone.tsx
+ * @see src/lib/csv-upload.ts, src/components/upload/csv-upload-zone.tsx, src/app/(dashboard)/upload/page.tsx
  */
 import { z } from 'zod';
 import type { CsvUploadResult } from '@/lib/csv-upload';

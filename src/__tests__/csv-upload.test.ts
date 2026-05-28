@@ -1,4 +1,11 @@
 // @file src/__tests__/csv-upload.test.ts
+/**
+ * @overview [UI-CSV-001] csv-upload.test.ts — lib/csv-upload + actions/csv-upload 단위/통합 테스트.
+ *
+ * @call-flow
+ * 1. render/mount lib/csv-upload + actions/csv-upload
+ * 2. assert UI states + interactions
+ */
 import {
   getCsvValidationError,
   isValidCsvFile,

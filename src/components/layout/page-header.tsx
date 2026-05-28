@@ -1,4 +1,13 @@
 // @file src/components/layout/page-header.tsx
+/**
+ * @overview 페이지 제목·설명·액션 공통 헤더 — globals.css `.page-header` 유틸 사용.
+ *
+ * @call-flow
+ * 1. dashboard pages → PageHeader { eyebrow, title, description, actions }
+ * 2. `.page-title` / `.page-description` — 시각적 계층 통일
+ *
+ * @see src/app/globals.css, src/app/(dashboard)/settings/page.tsx
+ */
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
@@ -11,6 +20,7 @@ type PageHeaderProps = {
   className?: string
 }
 
+/** 페이지 상단 eyebrow·제목·설명·액션 슬롯 헤더. */
 export function PageHeader({
   title,
   description,

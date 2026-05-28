@@ -82,6 +82,15 @@ cd studio && npm install && npm run dev   # :9002
 # AI: GEMINI_API_KEY in .env.local
 ```
 
+## Docs (read order)
+
+1. `docs/UX_FLOW.md` — UX 시나리오
+2. `docs/COMPONENT_STRUCTURE.md` — 컴포넌트 계층
+3. `docs/CODE_QUALITY.md` — 품질 평가
+4. `docs/ARCHITECTURE.md` — call-flow
+5. `docs/CODE_INDEX.md` — file paths
+6. `docs/IMPLEMENTATION_STATUS.md` — task status
+
 ## 주석 규칙
 
 `// @file src/...` + `@overview` + `@call-flow` → `docs/CODE_ANNOTATION_GUIDE.md`

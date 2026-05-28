@@ -1,4 +1,11 @@
 // @file src/__tests__/review-journal-list.test.tsx
+/**
+ * @overview [UI-REVIEW-001] review-journal-list.test.tsx — ReviewJournalList 단위/통합 테스트.
+ *
+ * @call-flow
+ * 1. render/mount ReviewJournalList
+ * 2. assert UI states + interactions
+ */
 import { render, screen, within } from '@testing-library/react';
 import { ReviewJournalList } from '@/components/reviews/review-journal-list';
 import { getReviewJournals, formatDailyReturn } from '@/lib/review-fixtures';
@@ -10,9 +17,7 @@ jest.mock('next/link', () => ({
   ),
 }));
 
-/**
- * @fileOverview [UI-REVIEW-001] ReviewJournalList 테스트 — 전체 카드 필수 필드 검증
- */
+
 describe('ReviewJournalList', () => {
   it('날짜 내림차순으로 카드를 렌더링해야 합니다.', () => {
     render(<ReviewJournalList />);

@@ -1,6 +1,16 @@
-// @file src/app/(dashboard)/system/page.tsx
-
 "use client"
+
+// @file src/app/(dashboard)/system/page.tsx
+/**
+ * @overview System Settings mock 페이지 — 브로커 연동·성능 토글·시스템 헬스.
+ *
+ * @call-flow
+ * 1. /system → AppSidebar adminNav "System Settings"
+ * 2. Broker Integrations / Performance Switch — mock UI
+ * 3. Save Config → useToast() 피드백
+ *
+ * @see src/components/layout/app-sidebar.tsx, src/hooks/use-toast.ts
+ */
 
 import * as React from "react"
 import { Settings, Shield, Zap, Globe, Cpu, Database, Save, RotateCcw } from "lucide-react"

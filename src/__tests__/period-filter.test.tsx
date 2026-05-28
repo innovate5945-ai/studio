@@ -1,4 +1,11 @@
 // @file src/__tests__/period-filter.test.tsx
+/**
+ * @overview [UI-DASH-001] period-filter.test.tsx — PeriodFilter 단위/통합 테스트.
+ *
+ * @call-flow
+ * 1. render/mount PeriodFilter
+ * 2. assert UI states + interactions
+ */
 import { render, screen, fireEvent } from '@testing-library/react';
 import { PeriodFilter } from '@/components/dashboard/period-filter';
 

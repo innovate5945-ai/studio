@@ -1,6 +1,16 @@
 "use client"
 
 // @file src/hooks/use-toast.ts
+/**
+ * @overview Toast 알림 전역 상태 훅 (shadcn) — reducer + 구독 패턴.
+ *
+ * @call-flow
+ * 1. toast({ title, description }) → ADD_TOAST dispatch
+ * 2. useToast() — memoryState 구독, toast / dismiss 반환
+ * 3. Toaster 컴포넌트 — useToast().toasts 렌더링
+ *
+ * @see src/components/ui/toast.tsx, src/components/ui/toaster.tsx
+ */
 // Inspired by react-hot-toast library
 import * as React from "react"
 

@@ -1,6 +1,16 @@
-// @file src/app/(dashboard)/audit/page.tsx
-
 "use client"
+
+// @file src/app/(dashboard)/audit/page.tsx
+/**
+ * @overview Audit Trail mock 페이지 — 규율 위반·설정 변경·세션 이력 테이블.
+ *
+ * @call-flow
+ * 1. /audit → AppSidebar adminNav "Audit Trail"
+ * 2. inline auditLogs mock → Table (severity Badge)
+ * 3. KPI 카드 3종 — Critical Breaches / Warnings / Compliance Rate
+ *
+ * @see src/components/layout/app-sidebar.tsx
+ */
 
 import * as React from "react"
 import { History, ShieldAlert, Info, AlertTriangle, CheckCircle2 } from "lucide-react"

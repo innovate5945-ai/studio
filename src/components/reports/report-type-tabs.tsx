@@ -1,6 +1,15 @@
 "use client"
 
 // @file src/components/reports/report-type-tabs.tsx
+/**
+ * @overview [UI-DASH-002] 주간/월간 리포트 유형 탭 — weekly | monthly 전환.
+ *
+ * @call-flow
+ * 1. REPORT_TYPE_OPTIONS (lib) → TabsTrigger
+ * 2. onChange(reportType) → ReportsView → getReportData 재조회
+ *
+ * @see src/lib/report-fixtures.ts, src/components/reports/reports-view.tsx
+ */
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { cn } from "@/lib/utils"
 import { REPORT_TYPE_OPTIONS, type ReportType } from "@/lib/report-fixtures"
@@ -11,9 +20,8 @@ type ReportTypeTabsProps = {
   className?: string
 }
 
-/**
- * @fileOverview [UI-DASH-002] 주간/월간 리포트 토글 탭
- */
+
+/** 주간/월간 리포트 유형 선택 탭. */
 export function ReportTypeTabs({ value, onChange, className }: ReportTypeTabsProps) {
   return (
     <Tabs

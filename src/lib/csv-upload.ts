@@ -1,8 +1,15 @@
 // @file src/lib/csv-upload.ts
 /**
- * @overview [UI-CSV-001] CSV 클라이언트 검증·업로드 progress·CsvUploadResult 타입.
- * @call-flow CsvUploadZone → getCsvValidationError → processCsvUpload (actions)
+ * @overview [UI-CSV-001] CSV 클라이언트 검증·업로드 progress 시뮬레이션·CsvUploadResult 타입.
+ *
+ * @call-flow
+ * 1. CsvUploadZone → getCsvValidationError(file) — 형식/크기 검증
+ * 2. simulateUploadProgress — UI progress bar
+ * 3. processCsvUpload (actions/csv-upload.ts) — 서버 mock ingest
+ *
+ * @see src/components/upload/csv-upload-zone.tsx, src/actions/csv-upload.ts
  */
+/** CSV 업로드 허용 최대 파일 크기 (MB) */
 export const MAX_CSV_FILE_SIZE_MB = 50;
 
 const ACCEPTED_EXTENSIONS = ['.csv'] as const;
@@ -13,6 +20,7 @@ const ACCEPTED_MIME_TYPES = new Set([
   'application/vnd.ms-excel',
 ]);
 
+/** CSV 확장자·MIME 타입이 유효한지 확인합니다. */
 export function isValidCsvFile(file: File): boolean {
   const lowerName = file.name.toLowerCase();
   const hasCsvExtension = ACCEPTED_EXTENSIONS.some((ext) => lowerName.endsWith(ext));
@@ -21,6 +29,7 @@ export function isValidCsvFile(file: File): boolean {
   return hasCsvExtension && hasCsvMime;
 }
 
+/** 파일 형식·크기 오류 메시지를 반환합니다. 유효하면 null. */
 export function getCsvValidationError(file: File): string | null {
   const lowerName = file.name.toLowerCase();
 
@@ -47,6 +56,7 @@ export type UploadSimulationOptions = {
   step?: number;
 };
 
+/** 클라이언트 업로드 progress bar 시뮬레이션. cleanup 함수를 반환합니다. */
 export function simulateUploadProgress({
   onProgress,
   onComplete,

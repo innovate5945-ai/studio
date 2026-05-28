@@ -1,6 +1,16 @@
 "use client"
 
 // @file src/components/reviews/review-timeline-chart.tsx
+/**
+ * @overview [UI-REVIEW-002] 매매 타임라인 라인 차트 — 누적 손익 + 이벤트 마커.
+ *
+ * @call-flow
+ * 1. ReviewDetailView → detail.timeline
+ * 2. ReviewTimelineChart → LineChart + ReferenceDot (entry/exit/win/loss)
+ * 3. formatTimelinePnl — tooltip 원화 표시
+ *
+ * @see src/lib/review-detail-fixtures.ts, src/components/reviews/review-detail-view.tsx
+ */
 import {
   LineChart,
   Line,
@@ -22,9 +32,8 @@ type ReviewTimelineChartProps = {
   dateLabel: string
 }
 
-/**
- * @fileOverview [UI-REVIEW-002] 상세 매매 타임라인 차트
- */
+
+/** 당일 매매 누적 손익 타임라인 차트. */
 export function ReviewTimelineChart({ timeline, dateLabel }: ReviewTimelineChartProps) {
   const eventPoints = timeline.filter((point) => point.eventType)
 

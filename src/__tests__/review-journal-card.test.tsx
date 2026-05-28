@@ -1,4 +1,11 @@
 // @file src/__tests__/review-journal-card.test.tsx
+/**
+ * @overview [UI-REVIEW-001] review-journal-card.test.tsx — ReviewJournalCard 단위/통합 테스트.
+ *
+ * @call-flow
+ * 1. render/mount ReviewJournalCard
+ * 2. assert UI states + interactions
+ */
 import { render, screen, within } from '@testing-library/react';
 import { ReviewJournalCard } from '@/components/reviews/review-journal-card';
 import { getReviewJournals } from '@/lib/review-fixtures';
@@ -10,9 +17,7 @@ jest.mock('next/link', () => ({
   ),
 }));
 
-/**
- * @fileOverview [UI-REVIEW-001] ReviewJournalCard 테스트
- */
+
 describe('ReviewJournalCard', () => {
   const sample = getReviewJournals()[0];
 

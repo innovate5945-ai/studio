@@ -2,7 +2,9 @@
 
 > **AI 가이드**: MVP UI Task 구현 현황 SSOT. 상세 Task 명세는 repo `TASKS/ISSUE_*.md`, SRS는 `05_SRS_v1.md` v1.3.
 
-**기준일**: 2026-05-25 | **환경**: Next.js 15, mock data, in-memory Server Actions
+**기준일**: 2026-05-28 | **환경**: Next.js 15, mock data, in-memory Server Actions
+
+**프로토타입 UI 단계**: ✅ **완료** (문서: UX_FLOW, COMPONENT_STRUCTURE, CODE_QUALITY)
 
 ---
 
@@ -39,6 +41,8 @@
 
 | 날짜 | 항목 | 내용 |
 |------|------|------|
+| 2026-05-28 | Prototype wrap-up | UX_FLOW, COMPONENT_STRUCTURE, CODE_QUALITY, README 종합 |
+| 2026-05-28 | Header annotation | 60 feature files `@file/@overview/@call-flow` 수동 정교화 |
 | 2026-05-25 | Server Actions | `"use server"` 규칙 준수 — 스키마/타입을 `lib/*`로 분리 |
 | 2026-05-25 | Visual hierarchy | Tailwind `@layer components` 타이포·PageHeader 도입 |
 | 2026-05-25 | Documentation | CODE_INDEX, ARCHITECTURE, AI_CONTEXT, 주석 가이드 추가 |
@@ -73,6 +77,9 @@ npm run lint
 
 ## 관련 문서
 
+- [UX_FLOW.md](./UX_FLOW.md) — UX 핵심 시나리오
+- [COMPONENT_STRUCTURE.md](./COMPONENT_STRUCTURE.md) — 컴포넌트 계층·개선점
+- [CODE_QUALITY.md](./CODE_QUALITY.md) — 코드 품질 평가
 - [ARCHITECTURE.md](./ARCHITECTURE.md) — call-flow
 - [CODE_INDEX.md](./CODE_INDEX.md) — 파일 주소
 - [CODE_ANNOTATION_GUIDE.md](./CODE_ANNOTATION_GUIDE.md) — 주석 규칙

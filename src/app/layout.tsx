@@ -1,11 +1,13 @@
 // @file src/app/layout.tsx
 /**
- * @overview Root Layout — HTML shell, fonts, DisciplineProvider, Toaster.
+ * @overview Root Layout — HTML shell, fonts, 전역 DisciplineProvider·Toaster.
  *
  * @call-flow
- * app/layout.tsx → DisciplineProvider → (auth)|(dashboard) route groups
+ * 1. app/layout.tsx — metadata, globals.css, dark theme
+ * 2. DisciplineProvider → (auth) | (dashboard) route groups
+ * 3. Toaster — useToast() 전역 알림
  *
- * @see src/contexts/discipline-provider.tsx
+ * @see src/contexts/discipline-provider.tsx, src/app/(dashboard)/layout.tsx, src/app/(auth)/layout.tsx
  */
 import type {Metadata} from 'next';
 import './globals.css';

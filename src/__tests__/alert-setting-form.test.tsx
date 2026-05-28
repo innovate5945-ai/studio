@@ -1,4 +1,11 @@
 // @file src/__tests__/alert-setting-form.test.tsx
+/**
+ * @overview [UI-ALERT-001] alert-setting-form.test.tsx — AlertSettingForm 단위/통합 테스트.
+ *
+ * @call-flow
+ * 1. render/mount AlertSettingForm
+ * 2. assert UI states + interactions
+ */
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import { AlertSettingForm } from "@/components/alert-setting-form"
 import { saveAlertSettings } from "@/actions/alert-settings"
@@ -15,9 +22,7 @@ jest.mock("@/actions/alert-settings", () => ({
 
 const mockSaveAlertSettings = saveAlertSettings as jest.MockedFunction<typeof saveAlertSettings>
 
-/**
- * @fileOverview [UI-ALERT-001] AlertSettingForm 기능 및 접근성 테스트
- */
+
 describe("AlertSettingForm Component", () => {
   beforeEach(() => {
     jest.clearAllMocks()

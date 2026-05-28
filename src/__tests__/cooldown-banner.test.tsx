@@ -1,4 +1,11 @@
 // @file src/__tests__/cooldown-banner.test.tsx
+/**
+ * @overview [UI-ALERT-002] cooldown-banner.test.tsx — CooldownBanner 단위/통합 테스트.
+ *
+ * @call-flow
+ * 1. render/mount CooldownBanner
+ * 2. assert UI states + interactions
+ */
 import { render, screen } from '@testing-library/react';
 import { CooldownBanner } from '@/components/dashboard/cooldown-banner';
 import { useDiscipline } from '@/contexts/discipline-provider';
@@ -9,9 +16,7 @@ jest.mock('@/contexts/discipline-provider', () => ({
 
 const mockUseDiscipline = useDiscipline as jest.MockedFunction<typeof useDiscipline>;
 
-/**
- * @fileOverview [UI-ALERT-002] CooldownBanner 테스트
- */
+
 describe('CooldownBanner', () => {
   beforeEach(() => {
     jest.clearAllMocks();

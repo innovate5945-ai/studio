@@ -1,6 +1,16 @@
 "use client"
 
 // @file src/components/auth/login-form.tsx
+/**
+ * @overview [UI-AUTH-001] 로그인 폼 — react-hook-form + Zod 검증.
+ *
+ * @call-flow
+ * 1. login/page → AuthFormLayout → LoginForm
+ * 2. loginSchema (lib) 클라이언트 검증 → loginUser (action)
+ * 3. 성공 → toast + router.push("/") / 실패 → toast error
+ *
+ * @see src/lib/auth-validation.ts, src/actions/auth.ts, src/app/(auth)/login/page.tsx
+ */
 import * as React from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -21,9 +31,8 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 
-/**
- * @fileOverview [UI-AUTH-001] 로그인 폼 — 실시간 이메일/비밀번호 유효성 검사
- */
+
+/** 이메일·비밀번호 로그인 폼. */
 export function LoginForm() {
   const router = useRouter()
   const { toast } = useToast()

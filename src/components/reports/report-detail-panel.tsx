@@ -1,6 +1,15 @@
 "use client"
 
 // @file src/components/reports/report-detail-panel.tsx
+/**
+ * @overview [UI-DASH-002] 리포트 상세 분석 패널 — Key Insights + 본문 분석.
+ *
+ * @call-flow
+ * 1. ReportsView → getReportData(type) → ReportDetailPanel({ report })
+ * 2. keyInsights 목록 + analysisParagraphs 본문 렌더
+ *
+ * @see src/lib/report-fixtures.ts, src/components/reports/reports-view.tsx
+ */
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { FileText, Lightbulb } from "lucide-react"
@@ -10,9 +19,8 @@ type ReportDetailPanelProps = {
   report: ReportDetail
 }
 
-/**
- * @fileOverview [UI-DASH-002] 리포트 상세 분석 패널
- */
+
+/** 리포트 요약·인사이트·분석 본문 패널. */
 export function ReportDetailPanel({ report }: ReportDetailPanelProps) {
   return (
     <Card

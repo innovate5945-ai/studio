@@ -1,6 +1,16 @@
 "use client"
 
 // @file src/components/reviews/review-journal-card.tsx
+/**
+ * @overview [UI-REVIEW-001] 3분 스캔용 일지 스냅 카드 — 수익률·위반 키워드·AI 요약.
+ *
+ * @call-flow
+ * 1. ReviewJournalList → ReviewJournalCard({ entry })
+ * 2. formatDailyReturn / getReturnTone — 수익률 색상·표시
+ * 3. Link → /review/[id] 상세 페이지
+ *
+ * @see src/lib/review-fixtures.ts, src/app/(dashboard)/review/[id]/page.tsx
+ */
 import Link from "next/link"
 import { ArrowRight, Bot, Calendar, ShieldAlert, TrendingDown, TrendingUp } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
@@ -16,10 +26,8 @@ type ReviewJournalCardProps = {
   entry: ReviewJournalEntry
 }
 
-/**
- * @fileOverview [UI-REVIEW-001] 복기 일지 스냅 카드
- * 3분 스캔용: 당일 수익률 · 규율 위반 키워드 · AI 한줄평
- */
+
+/** 단일 복기 일지 스냅 카드 — 클릭 시 상세 페이지로 이동. */
 export function ReviewJournalCard({ entry }: ReviewJournalCardProps) {
   const tone = getReturnTone(entry.dailyReturnPercent)
 

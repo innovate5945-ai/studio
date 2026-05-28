@@ -1,4 +1,14 @@
 // @file src/app/(auth)/register/page.tsx
+/**
+ * @overview [UI-AUTH-001] 회원가입 페이지 — AuthFormLayout + RegisterForm.
+ *
+ * @call-flow
+ * 1. /register → RegisterPage (metadata)
+ * 2. AuthFormLayout → RegisterForm
+ * 3. submit → registerUser (action) → toast + router.push("/login")
+ *
+ * @see src/components/auth/register-form.tsx, src/components/auth/auth-form-layout.tsx, src/actions/auth.ts
+ */
 import type { Metadata } from "next"
 import { AuthFormLayout } from "@/components/auth/auth-form-layout"
 import { RegisterForm } from "@/components/auth/register-form"

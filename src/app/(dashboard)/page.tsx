@@ -2,11 +2,15 @@
 
 // @file src/app/(dashboard)/page.tsx
 /**
- * @overview Command Center (/) — Live Session Monitor, DashboardAnalytics, AI Fact-Bomb.
+ * @overview Command Center (/) — Live Session Monitor + DashboardAnalytics + AI Fact-Bomb.
  *
  * @call-flow
- * useDiscipline() → recordTrade/addLoss → evaluateDisciplineBreach (via Provider)
- * DashboardAnalytics → getDashboardData (lib/dashboard-fixtures)
+ * 1. useDiscipline() — startSession, recordTrade, addLoss → evaluateDisciplineBreach (Provider)
+ * 2. Live Session Monitor — 손실%/매매횟수 vs settings 임계값
+ * 3. DashboardAnalytics — getDashboardData(period)
+ * 4. AI Reality-Check 카드 — 수동 Fact-Bomb 트리거
+ *
+ * @see src/contexts/discipline-provider.tsx, src/components/dashboard/dashboard-analytics.tsx
  */
 import * as React from "react"
 import { Play, Square, Plus, Minus, RotateCcw, Zap } from "lucide-react"

@@ -1,6 +1,16 @@
 "use client"
 
 // @file src/components/alert-setting-form.tsx
+/**
+ * @overview [UI-ALERT-001] 알람 설정 폼 — 손실폭 슬라이더·매매횟수 상한 입력·저장.
+ *
+ * @call-flow
+ * 1. settings/page → getAlertSettings → defaultValues props
+ * 2. Slider(lossLimit) + Input(tradeCap) — 클라이언트 validate
+ * 3. 저장 → saveAlertSettings(input) → toast 성공/실패 피드백
+ *
+ * @see src/actions/alert-settings.ts, src/lib/alert-settings.ts, src/app/(dashboard)/settings/page.tsx
+ */
 import * as React from "react"
 import { ShieldAlert, Save, AlertCircle, Loader2 } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
@@ -21,11 +31,8 @@ interface AlertSettingFormProps {
   isError?: boolean
 }
 
-/**
- * @fileOverview [UI-ALERT-001] 알람 설정 화면 컴포넌트
- * 사용자의 매매 기강을 위해 리스크 관리 기준(손실폭, 매매횟수)을 설정하는 폼입니다.
- * 저장은 Next.js Server Action(`saveAlertSettings`)을 통해 처리됩니다.
- */
+
+/** 손실 한도·매매 횟수 알람 임계값을 편집·저장하는 설정 폼. */
 export function AlertSettingForm({
   defaultValues = { lossLimit: 5, tradeCap: 5 },
   isLoading,

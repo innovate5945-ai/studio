@@ -1,4 +1,11 @@
 // @file src/__tests__/dashboard-fixtures.test.ts
+/**
+ * @overview [UI-DASH-001] dashboard-fixtures.test.ts — lib/dashboard-fixtures 단위/통합 테스트.
+ *
+ * @call-flow
+ * 1. render/mount lib/dashboard-fixtures
+ * 2. assert UI states + interactions
+ */
 import { getDashboardData, formatKrw } from '@/lib/dashboard-fixtures';
 
 describe('dashboard-fixtures', () => {
@@ -37,4 +44,4 @@ describe('dashboard-fixtures', () => {
     expect(week.winRate).not.toBe(month.winRate);
     expect(month.totalTrades).not.toBe(quarter.totalTrades);
   });
-});
+});

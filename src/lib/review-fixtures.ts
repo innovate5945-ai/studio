@@ -1,7 +1,13 @@
 // @file src/lib/review-fixtures.ts
 /**
- * @overview [UI-REVIEW-001] 복기 일지 목록 mock 데이터.
- * @call-flow ReviewsView → getReviewJournals() → ReviewJournalList → ReviewJournalCard
+ * @overview [UI-REVIEW-001] 복기 일지 목록 mock — 3분 스캔용 카드 데이터.
+ *
+ * @call-flow
+ * 1. ReviewsView → getReviewJournals()
+ * 2. ReviewJournalList → ReviewJournalCard (날짜별 카드)
+ * 3. formatDailyReturn / getReturnTone — 수익률 표시·색상
+ *
+ * @see src/components/reviews/reviews-view.tsx, src/components/reviews/review-journal-card.tsx
  */
 export type ReviewJournalEntry = {
   id: string;
@@ -67,6 +73,7 @@ const REVIEW_JOURNALS: ReviewJournalEntry[] = [
   },
 ];
 
+/** 복기 일지 mock 목록을 날짜 내림차순으로 반환합니다. */
 export function getReviewJournals(): ReviewJournalEntry[] {
   return [...REVIEW_JOURNALS].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()

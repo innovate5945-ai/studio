@@ -1,4 +1,11 @@
 // @file src/__tests__/reviews-view.test.tsx
+/**
+ * @overview [UI-REVIEW-001] reviews-view.test.tsx — ReviewsView 단위/통합 테스트.
+ *
+ * @call-flow
+ * 1. render/mount ReviewsView
+ * 2. assert UI states + interactions
+ */
 import { render, screen, within, fireEvent } from '@testing-library/react';
 import { ReviewsView } from '@/components/reviews/reviews-view';
 import { getReviewJournals } from '@/lib/review-fixtures';
@@ -10,9 +17,7 @@ jest.mock('next/link', () => ({
   ),
 }));
 
-/**
- * @fileOverview [UI-REVIEW-001] ReviewsView 통합 테스트
- */
+
 describe('ReviewsView', () => {
   it('날짜별 복기 일지 카드 리스트를 렌더링해야 합니다.', () => {
     render(<ReviewsView />);

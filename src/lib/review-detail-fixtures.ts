@@ -1,7 +1,13 @@
 // @file src/lib/review-detail-fixtures.ts
 /**
- * @overview [UI-REVIEW-002] 복기 일지 상세 mock (차트·인사이트·분석).
- * @call-flow review/[id]/page → getReviewDetail(id) → ReviewDetailView
+ * @overview [UI-REVIEW-002] 복기 일지 상세 mock — 타임라인 차트·AI 심층 분석 데이터.
+ *
+ * @call-flow
+ * 1. review/[id]/page → getReviewJournalById(id)
+ * 2. getReviewJournals (review-fixtures) + DETAIL_EXTENSIONS 병합
+ * 3. ReviewDetailView → ReviewTimelineChart + ReviewInsightsPanel
+ *
+ * @see src/lib/review-fixtures.ts, src/components/reviews/review-detail-view.tsx
  */
 import {
   getReviewJournals,
@@ -199,6 +205,7 @@ const DETAIL_EXTENSIONS: Record<
   },
 };
 
+/** ID로 복기 일지 상세(타임라인·AI 분석) mock을 조회합니다. 없으면 null. */
 export function getReviewJournalById(id: string): ReviewJournalDetail | null {
   const base = getReviewJournals().find((entry) => entry.id === id);
   if (!base) return null;

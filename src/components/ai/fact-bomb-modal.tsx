@@ -1,6 +1,16 @@
 "use client"
 
 // @file src/components/ai/fact-bomb-modal.tsx
+/**
+ * @overview [UI-ALERT-002] AI Fact-Bomb 모달 — 규율 위반 시 Gemini Reality-Check 리포트 표시.
+ *
+ * @call-flow
+ * 1. DisciplineProvider breach → isFactBombOpen → FactBombAlertModal open
+ * 2. auto triggerAnalysis → aiRealityCheckFactBomb({ tradeLogs: MOCK })
+ * 3. FactBombReportBody — loading → critiqueSummary / badHabits / insights 렌더
+ *
+ * @see src/contexts/discipline-provider.tsx, src/ai/flows/ai-reality-check-fact-bomb.ts
+ */
 import * as React from "react"
 import {
   Sparkles,
@@ -136,75 +146,8 @@ function FactBombReportBody({
   )
 }
 
-/** 대시보드에서 수동 실행하는 Fact-Bomb 모달 */
-export function FactBombModal() {
-  const [open, setOpen] = React.useState(false)
-  const [loading, setLoading] = React.useState(false)
-  const [report, setReport] = React.useState<AIRealityCheckOutput | null>(null)
 
-  const triggerAnalysis = async () => {
-    setLoading(true)
-    try {
-      const result = await aiRealityCheckFactBomb({ tradeLogs: MOCK_TRADE_LOGS })
-      setReport(result)
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  React.useEffect(() => {
-    if (!open) {
-      setReport(null)
-      setLoading(false)
-    }
-  }, [open])
-
-  return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-bold">
-          <Sparkles className="w-4 h-4 mr-2" />
-          Generate Fact-Bomb
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="max-w-3xl max-h-[90vh] bg-background border-white/10 overflow-hidden flex flex-col p-0">
-        <DialogHeader className="p-6 border-b border-white/5 bg-primary/5">
-          <div className="flex items-center gap-3">
-            <div className="bg-primary p-2 rounded-lg">
-              <BrainCircuit className="w-6 h-6 text-primary-foreground" />
-            </div>
-            <div>
-              <DialogTitle className="text-2xl font-headline font-bold">AI Reality-Check</DialogTitle>
-              <DialogDescription className="text-primary/70">
-                Data-driven critique of your psychological biases.
-              </DialogDescription>
-            </div>
-          </div>
-        </DialogHeader>
-
-        <div className="flex-1 overflow-hidden">
-          <FactBombReportBody loading={loading} report={report} onAnalyze={triggerAnalysis} />
-        </div>
-
-        {report && (
-          <div className="p-4 border-t border-white/5 bg-background flex justify-between items-center">
-            <span className="text-xs text-muted-foreground font-mono">ID: FB-29384-ANALYSIS</span>
-            <Button variant="ghost" size="sm" onClick={() => setOpen(false)}>
-              Close
-            </Button>
-          </div>
-        )}
-      </DialogContent>
-    </Dialog>
-  )
-}
-
-/**
- * @fileOverview [UI-ALERT-002] 팩트폭행 알람 모달
- * alert-settings 임계값 위반 시 자동 오픈되며 AI 분석을 즉시 실행합니다.
- */
+/** 규율 위반 시 자동 열리는 AI Fact-Bomb Dialog. */
 export function FactBombAlertModal() {
   const { isFactBombOpen, setIsFactBombOpen, cooldown } = useDiscipline()
   const [loading, setLoading] = React.useState(false)
@@ -268,6 +211,61 @@ export function FactBombAlertModal() {
           <div className="p-4 border-t border-white/5 bg-background flex justify-between items-center">
             <span className="text-xs text-muted-foreground font-mono">ID: FB-ALERT-ENFORCE</span>
             <Button variant="ghost" size="sm" onClick={() => setIsFactBombOpen(false)}>
+              Close
+            </Button>
+          </div>
+        )}
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+/** 대시보드 Command Center에서 수동으로 AI Reality-Check를 요청하는 Fact-Bomb Dialog. */
+export function FactBombModal() {
+  const [open, setOpen] = React.useState(false)
+  const [loading, setLoading] = React.useState(false)
+  const [report, setReport] = React.useState<AIRealityCheckOutput | null>(null)
+
+  const triggerAnalysis = React.useCallback(async () => {
+    setLoading(true)
+    try {
+      const result = await aiRealityCheckFactBomb({ tradeLogs: MOCK_TRADE_LOGS })
+      setReport(result)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  React.useEffect(() => {
+    if (!open) {
+      setReport(null)
+      setLoading(false)
+    }
+  }, [open])
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button size="lg" className="font-bold">
+          <Sparkles className="mr-2 h-4 w-4" />
+          Generate Fact-Bomb
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="max-w-3xl max-h-[90vh] bg-background border-white/10 overflow-hidden flex flex-col p-0">
+        <DialogHeader className="p-6 border-b border-white/5">
+          <DialogTitle className="text-2xl font-headline font-bold">AI Reality-Check</DialogTitle>
+          <DialogDescription>
+            Gemini가 샘플 매매 로그를 분석해 Fact-Bomb 리포트를 생성합니다.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="flex-1 overflow-hidden">
+          <FactBombReportBody loading={loading} report={report} onAnalyze={triggerAnalysis} />
+        </div>
+        {report && (
+          <div className="p-4 border-t border-white/5 bg-background flex justify-end">
+            <Button variant="ghost" size="sm" onClick={() => setOpen(false)}>
               Close
             </Button>
           </div>

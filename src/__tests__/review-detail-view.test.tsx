@@ -1,4 +1,11 @@
 // @file src/__tests__/review-detail-view.test.tsx
+/**
+ * @overview [UI-REVIEW-002] review-detail-view.test.tsx — ReviewDetailView 단위/통합 테스트.
+ *
+ * @call-flow
+ * 1. render/mount ReviewDetailView
+ * 2. assert UI states + interactions
+ */
 import { render, screen, within } from '@testing-library/react';
 import { ReviewDetailView } from '@/components/reviews/review-detail-view';
 import { getReviewJournalById } from '@/lib/review-detail-fixtures';
@@ -40,9 +47,7 @@ import { useParams } from 'next/navigation';
 
 const mockUseParams = useParams as jest.MockedFunction<typeof useParams>;
 
-/**
- * @fileOverview [UI-REVIEW-002] ReviewDetailView 통합 테스트
- */
+
 describe('ReviewDetailView', () => {
   beforeEach(() => {
     jest.clearAllMocks();

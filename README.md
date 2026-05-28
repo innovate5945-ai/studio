@@ -1,49 +1,49 @@
 # IronTrader
 
-Firebase Studio 기반 **Next.js 15** 트레이딩 규율 대시보드입니다. 손실 한도·거래 빈도 설정, AI 기반 매매 심리 분석(Fact-Bomb), CSV 업로드, 성과 리포트 등을 한 화면에서 확인할 수 있습니다.
+Firebase Studio 기반 **Next.js 15** 트레이딩 규율 대시보드 프로토타입입니다.  
+손실 한도·거래 빈도 설정, AI 매매 심리 분석(Fact-Bomb), CSV 업로드, 성과 리포트, 3분 Snap-Scan 복기 일지를 mock/fixture 기반으로 구현했습니다.
 
-> 상세 기능 명세는 [`docs/blueprint.md`](docs/blueprint.md)를 참고하세요.
+> **프로토타입 단계 완료** (2026-05-28) — UI Task 8건 구현, feature 코드 60파일 주석·문서화 완료.
+
+---
+
+## 프로토타입 요약
+
+| 항목 | 상태 |
+|------|------|
+| UI Tasks (UI-AUTH ~ UI-REVIEW) | ✅ mock/fixture 기반 UI 완료 |
+| 규율 enforcement flow | ✅ breach → cooldown → Fact-Bomb |
+| Genkit AI Fact-Bomb | ✅ Gemini 2.5 Flash (API key 필요) |
+| Firebase Auth / Firestore | ⏳ blueprint 예정 |
+| Production backend | ❌ 의도적 defer |
 
 ---
 
 ## 주요 기능
 
-| 기능 | 설명 | 경로 |
+| 기능 | Task | 경로 |
 |------|------|------|
-| **Command Center** | 실시간 에쿼티·MDD 대시보드, 세션 시작/종료 | `/` |
-| **Trade Logs** | 시간순 거래 카드 스냅 리뷰 | `/reviews`, `/review/[id]` |
-| **Analytics** | 승률·MDD 등 기간별 성과 분석 | `/reports` |
-| **CSV Upload** | 드래그 앤 드롭 거래 내역 업로드 | `/upload` |
-| **Discipline Thresholds** | 손실 한도·매매 횟수 상한 설정 | `/settings` |
-| **Audit Trail** | 규율 위반·설정 변경 이력 | `/audit` |
-| **System Settings** | 시스템 환경 설정 | `/system` |
-| **AI Reality-Check (Fact-Bomb)** | Gemini 기반 매매 로그 심리 분석 | 대시보드 모달 |
-| **Cooldown Banner** | 규율 위반 시 강제 휴식 배너 | 전역 레이아웃 |
+| Command Center | UI-DASH-001, UI-ALERT-002 | `/` |
+| Discipline Thresholds | UI-ALERT-001 | `/settings` |
+| CSV Import | UI-CSV-001 | `/upload` |
+| Performance Reports | UI-DASH-002 | `/reports` |
+| Snap-Scan Review | UI-REVIEW-001/002 | `/reviews`, `/review/[id]` |
+| Login / Register | UI-AUTH-001 | `/login`, `/register` |
+| Cooldown Banner + Fact-Bomb | UI-ALERT-002 | 전역 layout |
+| Audit / System (mock) | — | `/audit`, `/system` |
 
 ---
 
 ## 기술 스택
 
 - **Framework**: Next.js 15 (App Router), React 19, TypeScript
-- **UI**: Tailwind CSS, [shadcn/ui](https://ui.shadcn.com/) (Radix UI), Recharts
-- **AI**: [Google Genkit](https://genkit.dev/) + `@genkit-ai/google-genai` (Gemini 2.5 Flash)
+- **UI**: Tailwind CSS, [shadcn/ui](https://ui.shadcn.com/), Recharts
+- **AI**: [Genkit](https://genkit.dev/) + Gemini 2.5 Flash
 - **배포**: Firebase App Hosting (`apphosting.yaml`)
-- **워크스페이스**: Firebase Studio / IDX (`.idx/dev.nix`)
-
----
-
-## 사전 요구 사항
-
-- **Node.js** 20 이상 (Firebase Studio IDX 환경은 Node 22 사용)
-- **npm** (또는 호환 패키지 매니저)
-- **Google Gemini API Key** — AI Fact-Bomb 기능 사용 시 필수  
-  [Google AI Studio](https://aistudio.google.com/apikey)에서 발급
 
 ---
 
 ## 빠른 시작
-
-### 1. 저장소 클론 및 의존성 설치
 
 ```bash
 git clone <repository-url>
@@ -51,43 +51,17 @@ cd studio
 npm install
 ```
 
-### 2. 환경 변수 설정
-
-프로젝트 루트에 `.env.local` 파일을 생성합니다. (`.gitignore`에 의해 Git에 포함되지 않습니다.)
+`.env.local`:
 
 ```env
-# Google Genkit / Gemini (AI Reality-Check 필수)
 GEMINI_API_KEY=your-gemini-api-key
-
-# GOOGLE_API_KEY 도 동일하게 사용 가능 (GEMINI_API_KEY 우선)
 ```
-
-> **참고**: `firebase` 패키지는 설치되어 있으나, 현재 UI는 대부분 목(mock) 데이터로 동작합니다. Firebase Auth / Firestore 연동은 blueprint에 정의된 향후 기능입니다.
-
-### 3. 개발 서버 실행
 
 ```bash
-npm run dev
+npm run dev    # http://localhost:9002
 ```
 
-브라우저에서 [http://localhost:9002](http://localhost:9002) 로 접속합니다.
-
-### 4. (선택) Genkit 개발 UI 실행
-
-AI Flow를 Genkit Developer UI에서 직접 테스트하려면 **별도 터미널**에서 실행합니다.
-
-```bash
-npm run genkit:dev
-```
-
-소스 변경 시 자동 재시작:
-
-```bash
-npm run genkit:watch
-```
-
-Genkit UI는 일반적으로 [http://localhost:4000](http://localhost:4000) 에서 열립니다.  
-앱 내 Fact-Bomb은 Next.js Server Action(`src/ai/flows/ai-reality-check-fact-bomb.ts`)으로 동작하므로, **UI만 보려면 `npm run dev`만으로도 충분**합니다. AI 분석을 실제로 호출하려면 `GEMINI_API_KEY`가 필요합니다.
+Genkit Dev UI (선택): `npm run genkit:dev` → http://localhost:4000
 
 ---
 
@@ -95,25 +69,12 @@ Genkit UI는 일반적으로 [http://localhost:4000](http://localhost:4000) 에�
 
 | 명령어 | 설명 |
 |--------|------|
-| `npm run dev` | Next.js 개발 서버 (Turbopack, **포트 9002**) |
-| `npm run genkit:dev` | Genkit 로컬 개발 서버 + Flow 디버깅 |
-| `npm run genkit:watch` | Genkit watch 모드 |
+| `npm run dev` | Next.js dev (Turbopack, **포트 9002**) |
 | `npm run build` | 프로덕션 빌드 |
-| `npm run start` | 빌드 결과물 실행 (기본 포트 3000) |
-| `npm run lint` | ESLint 검사 |
-| `npm run typecheck` | TypeScript 타입 검사 (`tsc --noEmit`) |
-| `npm test` | Jest 컴포넌트 테스트 실행 |
-| `npm run test:watch` | Jest watch 모드 |
-
-### Windows에서 빌드 시 참고
-
-`package.json`의 `build` 스크립트는 Unix 형식(`NODE_ENV=production`)입니다. Windows PowerShell/CMD에서는 아래처럼 실행하세요.
-
-```powershell
-$env:NODE_ENV="production"; npm run build
-```
-
-또는 Git Bash / WSL 환경에서 `npm run build`를 그대로 사용할 수 있습니다.
+| `npm run typecheck` | TypeScript 검사 |
+| `npm run lint` | ESLint |
+| `npm test` | Jest (ts-node 필요) |
+| `npm run genkit:dev` | Genkit flow 디버깅 |
 
 ---
 
@@ -122,138 +83,91 @@ $env:NODE_ENV="production"; npm run build
 ```
 studio/
 ├── src/
-│   ├── app/
-│   │   ├── layout.tsx          # Root layout (providers)
-│   │   ├── (auth)/             # [UI-AUTH-001] 인증 (사이드바 없음)
-│   │   │   ├── login/page.tsx
-│   │   │   └── register/page.tsx
-│   │   └── (dashboard)/        # 메인 대시보드
-│   │       ├── page.tsx        # Command Center
-│   │       ├── reviews/        # [UI-REVIEW-001] 복기 일지 목록
-│   │       ├── review/         # 복기 일지 상세
-│   │       ├── reports/        # Analytics
-│   │       ├── upload/         # CSV Upload
-│   │       ├── settings/       # Discipline Thresholds
-│   │       ├── audit/          # Audit Trail
-│   │       └── system/         # System Settings
-│   ├── actions/
-│   │   ├── alert-settings.ts   # [UI-ALERT-001]
-│   │   ├── discipline-cooldown.ts  # [UI-ALERT-002]
-│   │   ├── auth.ts             # [UI-AUTH-001]
-│   │   └── csv-upload.ts       # [UI-CSV-001]
-│   ├── ai/
-│   │   ├── genkit.ts
-│   │   ├── dev.ts
-│   │   └── flows/
-│   │       └── ai-reality-check-fact-bomb.ts
-│   ├── components/
-│   │   ├── auth/               # [UI-AUTH-001] 로그인/회원가입 폼
-│   │   ├── upload/             # [UI-CSV-001] CSV 업로드
-│   │   ├── dashboard/          # [UI-DASH-001] 통합 대시보드 차트
-│   │   ├── reports/            # [UI-DASH-002] 주간/월간 리포트
-│   │   ├── reviews/            # [UI-REVIEW-001] 복기 일지
-│   │   ├── layout/
-│   │   ├── ai/
-│   │   ├── dashboard/
-│   │   └── ui/
-│   ├── contexts/
-│   ├── hooks/
-│   └── lib/
-│       ├── dashboard-fixtures.ts  # [UI-DASH-001] Mock 차트 데이터
-│       ├── report-fixtures.ts     # [UI-DASH-002] Mock 리포트 데이터
-│       ├── review-fixtures.ts     # [UI-REVIEW-001] Mock 복기 일지
-│       └── review-detail-fixtures.ts  # [UI-REVIEW-002] 상세 Mock 데이터
-├── docs/
-│   ├── AI_CONTEXT.md           # AI 압축 컨텍스트 (작업 시작 1순위)
-│   ├── ARCHITECTURE.md         # 레이어·call-flow
-│   ├── CODE_INDEX.md           # 파일 경로 카탈로그
-│   ├── CODE_ANNOTATION_GUIDE.md
-│   ├── IMPLEMENTATION_STATUS.md
-│   └── blueprint.md
-├── scripts/
-│   └── add-file-headers.mjs    # @file 주석 자동 삽입
-├── apphosting.yaml
-├── .idx/dev.nix
-└── package.json
+│   ├── app/              # App Router (auth + dashboard groups)
+│   ├── actions/          # Server Actions (async only)
+│   ├── components/       # feature + ui/shadcn
+│   ├── contexts/         # DisciplineProvider
+│   ├── lib/              # schemas, fixtures, pure utils
+│   └── ai/               # Genkit flows
+├── docs/                 # SSOT 문서 (아래 표 참조)
+├── scripts/              # 주석 자동화 스크립트
+└── src/__tests__/        # Jest (18 files)
 ```
 
-경로 별칭: `@/*` → `src/*` (`tsconfig.json`)
+경로 별칭: `@/*` → `src/*`
 
 ---
 
-## Firebase Studio / IDX에서 실행
+## 문서 (SSOT)
 
-Firebase Studio 워크스페이스에서는 `.idx/dev.nix` 설정에 따라 Node 22가 제공됩니다. Preview는 다음 명령으로 자동 실행됩니다.
-
-```bash
-npm run dev -- --port $PORT --hostname 0.0.0.0
-```
-
-로컬과 동일하게 `npm install` 후 `npm run dev`로 시작하면 됩니다.
-
----
-
-## Firebase App Hosting 배포
-
-1. Firebase 프로젝트를 연결합니다.
-2. App Hosting 백엔드를 생성하고 이 저장소를 연결합니다.
-3. 배포 시 **Secret**으로 `GEMINI_API_KEY`를 등록합니다.
-
-```bash
-firebase apphosting:secrets:set GEMINI_API_KEY
-```
-
-`apphosting.yaml`에서 인스턴스 수 등 런타임 설정을 조정할 수 있습니다.
-
----
-
-## AI Fact-Bomb 사용 방법
-
-1. `GEMINI_API_KEY`를 `.env.local`에 설정합니다.
-2. `npm run dev`로 앱을 실행합니다.
-3. 대시보드(`/`)에서 **Generate Fact-Bomb** 버튼을 클릭합니다.
-4. **Deploy Fact-Bomb**을 누르면 Gemini가 샘플 거래 로그를 분석해 리포트를 생성합니다.
-
-Flow 정의: `src/ai/flows/ai-reality-check-fact-bomb.ts`  
-모델: `googleai/gemini-2.5-flash` (`src/ai/genkit.ts`)
-
----
-
-## 트러블슈팅
-
-| 증상 | 해결 방법 |
-|------|-----------|
-| AI 분석 실패 / API key 오류 | `.env.local`에 `GEMINI_API_KEY` 설정 후 dev 서버 재시작 |
-| 포트 충돌 (9002) | `npm run dev -- -p 3000` 등으로 포트 변경 |
-| Genkit UI가 열리지 않음 | `npm run genkit:dev` 실행 여부 확인, 4000번 포트 사용 중인지 확인 |
-| Windows에서 `npm run build` 실패 | 위 **Windows 빌드** 절 참고 |
-| `.genkit/` 폴더 | Genkit 실행 시 생성되며 `.gitignore` 대상 |
-
----
-
-## 디자인 가이드
-
-- **Primary**: Electric Indigo `#8a70ff`
-- **Background**: Obsidian Night `#14131a`
-- **Accent**: Azure Frost `#8ab2ff`
-- **Headline**: Space Grotesk / **Body**: Inter
-
----
-
-## 문서화 & 코드 주석
-
-IronTrader는 **파일 주소 자동 표기 + AI 컨텍스트 문서** 체계를 사용합니다.
+### 프로토타입 마무리 문서
 
 | 문서 | 용도 |
 |------|------|
-| [`docs/AI_CONTEXT.md`](docs/AI_CONTEXT.md) | **AI 우선** — 압축 컨텍스트 (작업 시작 시 1순위) |
-| [`docs/CODE_INDEX.md`](docs/CODE_INDEX.md) | 전체 파일 경로 카탈로그 (코드 주소) |
-| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | 레이어·call-flow·Server Action 규칙 |
-| [`docs/IMPLEMENTATION_STATUS.md`](docs/IMPLEMENTATION_STATUS.md) | Task별 구현 현황 |
-| [`docs/CODE_ANNOTATION_GUIDE.md`](docs/CODE_ANNOTATION_GUIDE.md) | `@file` / `@overview` / `@call-flow` 작성 규칙 |
-| [`docs/blueprint.md`](docs/blueprint.md) | 제품 기능·디자인 SSOT |
+| [**UX_FLOW.md**](docs/UX_FLOW.md) | **UX 핵심 시나리오** — 7개 flow, mermaid |
+| [**COMPONENT_STRUCTURE.md**](docs/COMPONENT_STRUCTURE.md) | **컴포넌트 계층·개선점** |
+| [**CODE_QUALITY.md**](docs/CODE_QUALITY.md) | **코드 품질 평가** — 점수·부채·exit criteria |
 
-### 소스 파일 주석 규칙
+### 개발·AI 참조
+
+| 문서 | 용도 |
+|------|------|
+| [AI_CONTEXT.md](docs/AI_CONTEXT.md) | AI 에이전트 1순위 압축 컨텍스트 |
+| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | 레이어·call-flow·Server Action 규칙 |
+| [CODE_INDEX.md](docs/CODE_INDEX.md) | 파일 경로 카탈로그 |
+| [IMPLEMENTATION_STATUS.md](docs/IMPLEMENTATION_STATUS.md) | UI Task 구현 현황 |
+| [CODE_ANNOTATION_GUIDE.md](docs/CODE_ANNOTATION_GUIDE.md) | `@file` / `@overview` / `@call-flow` |
+| [blueprint.md](docs/blueprint.md) | 제품·디자인 SSOT |
+
+---
+
+## UX 핵심 시나리오 (요약)
+
+1. **S1 Auth** — register → login → Command Center  
+2. **S2 Live Session** — Start Session → record trade/loss → breach → **CooldownBanner** + **FactBombAlertModal**  
+3. **S3 Settings** — 손실%/매매횟수 임계값 저장  
+4. **S4 CSV** — DnD upload → validation → mock ingest  
+5. **S5 Reports** — weekly/monthly analytics  
+6. **S6 Review** — 3분 snap list → search → detail (timeline + AI insights)
+
+상세: [docs/UX_FLOW.md](docs/UX_FLOW.md)
+
+---
+
+## 컴포넌트 계층 (요약)
+
+```
+app/layout → DisciplineProvider
+  └─ (dashboard)/layout → AppSidebar + CooldownBanner + FactBombAlertModal
+       └─ pages → PageHeader + feature components
+            ├─ DashboardAnalytics → charts (UI-DASH-001)
+            ├─ ReportsView → panels/cards (UI-DASH-002)
+            ├─ ReviewsView → ReviewDetailView (UI-REVIEW)
+            └─ AlertSettingForm / CsvUploadZone / auth forms
+```
+
+상세 mermaid·개선점: [docs/COMPONENT_STRUCTURE.md](docs/COMPONENT_STRUCTURE.md)
+
+---
+
+## 코드 품질 (프로토타입)
+
+| 영역 | 등급 | 비고 |
+|------|------|------|
+| 아키텍처 | A | lib/actions/contexts 분리 |
+| UX 완성도 | A | 8 UI Tasks |
+| 문서·주석 | A | 60 feature files annotated |
+| 타입 안전성 | B+ | calendar.tsx shadcn 이슈 잔존 |
+| 테스트 실행 | B | ts-node 미설치 |
+| 운영 준비 | C | mock backend |
+
+상세: [docs/CODE_QUALITY.md](docs/CODE_QUALITY.md)
+
+---
+
+## 코드 주석 규칙
+
+feature 파일 (`lib`, `actions`, `components` feature, `app`, `ai`):
 
 ```typescript
 'use server';
@@ -261,18 +175,53 @@ IronTrader는 **파일 주소 자동 표기 + AI 컨텍스트 문서** 체계를
 // @file src/actions/alert-settings.ts
 /**
  * @overview [UI-ALERT-001] 알람 설정 Server Actions
- * @call-flow SettingsPage → getAlertSettings → saveAlertSettings
+ *
+ * @call-flow
+ * 1. settings/page → getAlertSettings()
+ * 2. AlertSettingForm → saveAlertSettings
  */
 ```
 
-새 파일 추가 시 `@file` 주석 자동 삽입:
+**제외**: `components/ui/*` (shadcn), `__tests__/*`
 
-```bash
-node scripts/add-file-headers.mjs
-```
+### 주석 자동화 스크립트
+
+| 스크립트 | 용도 |
+|----------|------|
+| `node scripts/add-file-headers.mjs` | `@file` 태그만 추가 |
+| `node scripts/enrich-file-headers.mjs` | `@overview` + `@call-flow` bulk |
+| `node scripts/remove-fileoverview.mjs` | 레거시 `@fileOverview` 제거 |
+
+각 스크립트 상단 docstring — **개발자·AI 에이전트** dual-purpose.
+
+---
+
+## AI Fact-Bomb
+
+1. `GEMINI_API_KEY` 설정  
+2. `/` → **Generate Fact-Bomb** (수동) 또는 규율 breach 시 자동 modal  
+3. Flow: `src/ai/flows/ai-reality-check-fact-bomb.ts`
+
+---
+
+## 트러블슈팅
+
+| 증상 | 해결 |
+|------|------|
+| AI API 오류 | `.env.local` + dev 서버 재시작 |
+| 포트 9002 충돌 | `npm run dev -- -p 3000` |
+| `npm test` 실패 | `npm i -D ts-node` |
+| Windows build | `$env:NODE_ENV="production"; npm run build` |
+
+---
+
+## 디자인
+
+- Primary `#8a70ff` · Background `#14131a` · Accent `#8ab2ff`
+- Headline: Space Grotesk · Body: Inter
 
 ---
 
 ## 라이선스
 
-Private project (`package.json`: `"private": true`)
+Private project (`"private": true`)

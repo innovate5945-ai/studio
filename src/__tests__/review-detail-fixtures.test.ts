@@ -1,4 +1,11 @@
 // @file src/__tests__/review-detail-fixtures.test.ts
+/**
+ * @overview [UI-REVIEW-002] review-detail-fixtures.test.ts — lib/review-detail-fixtures 단위/통합 테스트.
+ *
+ * @call-flow
+ * 1. render/mount lib/review-detail-fixtures
+ * 2. assert UI states + interactions
+ */
 import { getReviewJournalById, formatTimelinePnl } from '@/lib/review-detail-fixtures';
 import { getReviewJournals } from '@/lib/review-fixtures';
 

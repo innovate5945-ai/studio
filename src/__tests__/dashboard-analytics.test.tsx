@@ -1,4 +1,11 @@
 // @file src/__tests__/dashboard-analytics.test.tsx
+/**
+ * @overview [UI-DASH-001] dashboard-analytics.test.tsx — DashboardAnalytics 단위/통합 테스트.
+ *
+ * @call-flow
+ * 1. render/mount DashboardAnalytics
+ * 2. assert UI states + interactions
+ */
 import { render, screen, fireEvent } from '@testing-library/react';
 import { DashboardAnalytics } from '@/components/dashboard/dashboard-analytics';
 
@@ -28,9 +35,7 @@ jest.mock('recharts', () => {
   };
 });
 
-/**
- * @fileOverview [UI-DASH-001] DashboardAnalytics 통합 테스트
- */
+
 describe('DashboardAnalytics', () => {
   it('기본 1주일 데이터와 차트 3종을 렌더링해야 합니다.', () => {
     render(<DashboardAnalytics />);

@@ -1,15 +1,17 @@
 'use server';
+
 // @file src/ai/flows/ai-reality-check-fact-bomb.ts
 /**
- * @fileOverview A Genkit flow that provides an 'AI Reality-Check' report
- * based on trade logs, offering a data-driven critique of trading psychology
- * and identifying bad habits.
+ * @overview AI Reality-Check Fact-Bomb Genkit Flow — trade log 기반 Gemini 매매 심리·습관 분석.
  *
- * - aiRealityCheckFactBomb - The main function to trigger the AI reality-check.
- * - AIRealityCheckInput - The input type for the aiRealityCheckFactBomb function.
- * - AIRealityCheckOutput - The return type for the aiRealityCheckFactBomb function.
+ * @call-flow
+ * 1. DisciplineProvider breach → FactBombModal open (isFactBombOpen)
+ * 2. FactBombModal → aiRealityCheckFactBomb({ tradeLogs })
+ * 3. aiRealityCheckFlow → aiRealityCheckPrompt → Gemini 2.5 Flash
+ * 4. AIRealityCheckOutput — critiqueSummary, badHabits, insights, recommendations
+ *
+ * @see src/ai/genkit.ts, src/components/ai/fact-bomb-modal.tsx, src/contexts/discipline-provider.tsx
  */
-
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
@@ -48,6 +50,7 @@ const AIRealityCheckOutputSchema = z.object({
 });
 export type AIRealityCheckOutput = z.infer<typeof AIRealityCheckOutputSchema>;
 
+/** Fact-Bomb flow 공개 API — trade log 문자열을 받아 AI Reality-Check 리포트를 생성합니다. */
 export async function aiRealityCheckFactBomb(
   input: AIRealityCheckInput
 ): Promise<AIRealityCheckOutput> {

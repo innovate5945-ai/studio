@@ -2,8 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @file src/app/globals.css */
-/* @overview Tailwind base + IronTrader 디자인 토큰 + @layer components 타이포 유틸리티 */
+/* @file src/app/globals.css
+ * @overview Tailwind base + IronTrader 디자인 토큰 + @layer components 타이포·레이아웃 유틸.
+ *
+ * @call-flow
+ * 1. @layer base — CSS 변수(:root), body gradient, font-headline
+ * 2. @layer components — .page-shell, .page-title, .section-title, .surface-card 등
+ * 3. PageHeader / dashboard pages — 공통 시각적 계층
+ *
+ * @see src/components/layout/page-header.tsx
+ */
 
 @layer base {
   :root {

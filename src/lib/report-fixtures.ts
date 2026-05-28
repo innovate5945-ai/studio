@@ -1,7 +1,13 @@
 // @file src/lib/report-fixtures.ts
 /**
- * @overview [UI-DASH-002] 주간/월간 리포트 mock 데이터.
- * @call-flow ReportsView → getReportData(reportType) → ReportDetailPanel + ReportCardList
+ * @overview [UI-DASH-002] 주간/월간 리포트 mock 데이터·포맷 헬퍼.
+ *
+ * @call-flow
+ * 1. ReportsView → getReportData(reportType)
+ * 2. ReportDetailPanel — analysisParagraphs, keyInsights
+ * 3. ReportCardList — cards[] 렌더링
+ *
+ * @see src/components/reports/reports-view.tsx
  */
 export type ReportType = 'weekly' | 'monthly';
 
@@ -160,6 +166,7 @@ const REPORT_FIXTURES: Record<ReportType, ReportDetail> = {
   monthly: MONTHLY_REPORT,
 };
 
+/** 리포트 유형(주간/월간)별 mock ReportDetail을 반환합니다. */
 export function getReportData(type: ReportType): ReportDetail {
   return REPORT_FIXTURES[type];
 }

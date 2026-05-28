@@ -1,4 +1,11 @@
 // @file src/__tests__/auth-validation.test.ts
+/**
+ * @overview [UI-AUTH-001] auth-validation.test.ts — lib/auth-validation 단위/통합 테스트.
+ *
+ * @call-flow
+ * 1. render/mount lib/auth-validation
+ * 2. assert UI states + interactions
+ */
 import { loginSchema, registerSchema } from '@/lib/auth-validation';
 
 describe('auth-validation', () => {
