@@ -1,3 +1,4 @@
+// @file src/components/auth/auth-form-layout.tsx
 import Link from "next/link"
 import { ShieldAlert } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -14,29 +15,29 @@ type AuthFormLayoutProps = {
  */
 export function AuthFormLayout({ title, description, children, footer }: AuthFormLayoutProps) {
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center px-4 py-8 sm:px-6 lg:px-8 bg-background">
-      <div className="w-full max-w-[420px] space-y-6">
-        <div className="flex flex-col items-center text-center space-y-3">
+    <div className="flex min-h-screen w-full flex-col items-center justify-center bg-background px-4 py-8 sm:px-6 lg:px-8">
+      <div className="w-full max-w-[420px] space-y-8">
+        <div className="flex flex-col items-center space-y-3 text-center">
           <Link href="/" className="inline-flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shrink-0">
-              <ShieldAlert className="w-5 h-5 text-primary-foreground" />
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary">
+              <ShieldAlert className="h-5 w-5 text-primary-foreground" />
             </div>
-            <span className="font-headline font-bold text-2xl">IronTrader</span>
+            <span className="font-headline text-2xl font-bold tracking-tight">IronTrader</span>
           </Link>
-          <p className="text-sm text-muted-foreground max-w-xs">
+          <p className="prose-muted max-w-xs">
             Professional trading discipline dashboard
           </p>
         </div>
 
-        <Card className="border-white/10 bg-card/60 backdrop-blur-sm shadow-xl w-full">
-          <CardHeader className="space-y-1.5 px-4 pt-6 sm:px-6">
-            <CardTitle className="text-xl sm:text-2xl font-headline font-bold">{title}</CardTitle>
-            <CardDescription className="text-sm leading-relaxed">{description}</CardDescription>
+        <Card className="surface-card w-full shadow-xl">
+          <CardHeader className="space-y-2 px-4 pt-6 sm:px-6">
+            <CardTitle className="font-headline text-xl font-semibold sm:text-2xl">{title}</CardTitle>
+            <CardDescription className="leading-relaxed">{description}</CardDescription>
           </CardHeader>
           <CardContent className="px-4 pb-6 sm:px-6">{children}</CardContent>
         </Card>
 
-        <div className="text-center text-sm text-muted-foreground px-2">{footer}</div>
+        <div className="px-2 text-center text-sm leading-relaxed text-muted-foreground">{footer}</div>
       </div>
     </div>
   )

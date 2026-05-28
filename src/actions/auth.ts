@@ -1,17 +1,27 @@
 'use server';
 
+// @file src/actions/auth.ts
+/**
+ * @overview [UI-AUTH-001] 인증 Server Actions — 로그인/회원가입 mock 처리.
+ *
+ * @call-flow
+ * 1. LoginForm submit → loginUser(input) → loginSchema.safeParse (lib/auth-validation)
+ * 2. RegisterForm submit → registerUser(input) → registerSchema.safeParse
+ *
+ * @constraints "use server" — async function만 export. AuthResult 타입은 lib/auth-validation.ts.
+ * @see src/components/auth/login-form.tsx, register-form.tsx
+ */
 import {
   loginSchema,
   registerSchema,
+  type AuthResult,
   type LoginInput,
   type RegisterInput,
 } from '@/lib/auth-validation';
 
-export type AuthResult =
-  | { success: true; message: string }
-  | { success: false; error: string };
-
 // TODO: Replace with Firebase Auth when Authenticated Vault is wired up.
+
+/** 이메일/비밀번호로 로그인합니다 (mock). */
 export async function loginUser(input: LoginInput): Promise<AuthResult> {
   const parsed = loginSchema.safeParse(input);
 
@@ -26,6 +36,7 @@ export async function loginUser(input: LoginInput): Promise<AuthResult> {
   return { success: true, message: '로그인되었습니다.' };
 }
 
+/** 회원가입을 처리합니다 (mock). */
 export async function registerUser(input: RegisterInput): Promise<AuthResult> {
   const parsed = registerSchema.safeParse(input);
 

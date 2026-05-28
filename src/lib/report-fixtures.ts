@@ -1,3 +1,8 @@
+// @file src/lib/report-fixtures.ts
+/**
+ * @overview [UI-DASH-002] 주간/월간 리포트 mock 데이터.
+ * @call-flow ReportsView → getReportData(reportType) → ReportDetailPanel + ReportCardList
+ */
 export type ReportType = 'weekly' | 'monthly';
 
 export type ReportCardItem = {

@@ -1,3 +1,4 @@
+// @file src/__tests__/period-filter.test.tsx
 import { render, screen, fireEvent } from '@testing-library/react';
 import { PeriodFilter } from '@/components/dashboard/period-filter';
 

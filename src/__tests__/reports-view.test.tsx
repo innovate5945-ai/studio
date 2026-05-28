@@ -1,3 +1,4 @@
+// @file src/__tests__/reports-view.test.tsx
 import { render, screen, fireEvent, within } from '@testing-library/react';
 import { ReportsView } from '@/components/reports/reports-view';
 

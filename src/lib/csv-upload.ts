@@ -1,3 +1,8 @@
+// @file src/lib/csv-upload.ts
+/**
+ * @overview [UI-CSV-001] CSV 클라이언트 검증·업로드 progress·CsvUploadResult 타입.
+ * @call-flow CsvUploadZone → getCsvValidationError → processCsvUpload (actions)
+ */
 export const MAX_CSV_FILE_SIZE_MB = 50;
 
 const ACCEPTED_EXTENSIONS = ['.csv'] as const;
@@ -71,3 +76,12 @@ export type CsvUploadSummary = {
   assetCount: number;
   fileName: string;
 };
+
+export type CsvUploadResult =
+  | {
+      success: true;
+      tradeCount: number;
+      assetCount: number;
+      fileName: string;
+    }
+  | { success: false; error: string };

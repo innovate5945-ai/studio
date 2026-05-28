@@ -1,5 +1,6 @@
 "use client"
 
+// @file src/components/reviews/review-detail-view.tsx
 import Link from "next/link"
 import { useParams, useRouter } from "next/navigation"
 import { ArrowLeft, Calendar, TrendingDown, TrendingUp } from "lucide-react"

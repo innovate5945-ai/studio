@@ -1,3 +1,4 @@
+// @file src/__tests__/review-journal-card.test.tsx
 import { render, screen, within } from '@testing-library/react';
 import { ReviewJournalCard } from '@/components/reviews/review-journal-card';
 import { getReviewJournals } from '@/lib/review-fixtures';

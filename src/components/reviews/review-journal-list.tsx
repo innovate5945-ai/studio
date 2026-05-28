@@ -1,5 +1,6 @@
 "use client"
 
+// @file src/components/reviews/review-journal-list.tsx
 import { getReviewJournals, type ReviewJournalEntry } from "@/lib/review-fixtures"
 import { ReviewJournalCard } from "@/components/reviews/review-journal-card"
 

@@ -1,5 +1,6 @@
 "use client"
 
+// @file src/components/reviews/review-journal-card.tsx
 import Link from "next/link"
 import { ArrowRight, Bot, Calendar, ShieldAlert, TrendingDown, TrendingUp } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
@@ -25,7 +26,7 @@ export function ReviewJournalCard({ entry }: ReviewJournalCardProps) {
   return (
     <Link href={`/review/${entry.id}`} className="block group">
       <Card
-        className="border-white/5 bg-card/50 hover:bg-card/70 hover:border-primary/20 transition-all overflow-hidden"
+        className="surface-card-muted transition-all hover:border-primary/20 hover:bg-card/70"
         data-testid={`review-journal-card-${entry.id}`}
       >
         <CardContent className="p-0">
@@ -41,24 +42,24 @@ export function ReviewJournalCard({ entry }: ReviewJournalCardProps) {
 
             <div className="flex-1 p-4 sm:p-5 space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
-                <div className="space-y-1 min-w-0">
-                  <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-1.5">
-                    <Calendar className="w-3.5 h-3.5" />
+                <div className="min-w-0 space-y-1">
+                  <p className="eyebrow flex items-center gap-1.5">
+                    <Calendar className="h-3.5 w-3.5" />
                     {entry.dateLabel}
                   </p>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="prose-muted">
                     {entry.tradeCount}회 매매 · 약 {entry.scanMinutes}분 스캔
                   </p>
                 </div>
 
                 <div
-                  className="flex items-center gap-2 shrink-0"
+                  className="flex shrink-0 items-center gap-2"
                   data-testid={`review-return-${entry.id}`}
                 >
-                  <span className="text-xs font-semibold text-muted-foreground uppercase">당일 수익률</span>
+                  <span className="stat-label">당일 수익률</span>
                   <span
                     className={cn(
-                      "text-xl sm:text-2xl font-headline font-bold",
+                      "font-headline text-xl font-bold tabular-nums sm:text-2xl",
                       tone === "positive" && "text-emerald-400",
                       tone === "negative" && "text-destructive",
                       tone === "neutral" && "text-foreground"
@@ -72,8 +73,8 @@ export function ReviewJournalCard({ entry }: ReviewJournalCardProps) {
               </div>
 
               <div className="space-y-2" data-testid={`review-violations-${entry.id}`}>
-                <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-1.5">
-                  <ShieldAlert className="w-3.5 h-3.5" />
+                <p className="eyebrow flex items-center gap-1.5">
+                  <ShieldAlert className="h-3.5 w-3.5" />
                   주요 규율 위반 키워드
                 </p>
                 <div className="flex flex-wrap gap-2">
@@ -102,11 +103,11 @@ export function ReviewJournalCard({ entry }: ReviewJournalCardProps) {
                 className="rounded-lg border border-primary/15 bg-primary/5 p-3 sm:p-4"
                 data-testid={`review-ai-summary-${entry.id}`}
               >
-                <p className="text-xs font-bold uppercase tracking-widest text-primary flex items-center gap-1.5 mb-2">
-                  <Bot className="w-3.5 h-3.5" />
+                <p className="eyebrow mb-2 flex items-center gap-1.5 text-primary">
+                  <Bot className="h-3.5 w-3.5" />
                   AI 한줄평
                 </p>
-                <p className="text-sm sm:text-base leading-relaxed text-foreground/90">
+                <p className="text-sm leading-relaxed text-foreground/90 sm:text-base">
                   {entry.aiSummary}
                 </p>
               </div>

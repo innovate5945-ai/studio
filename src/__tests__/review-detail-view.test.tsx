@@ -1,3 +1,4 @@
+// @file src/__tests__/review-detail-view.test.tsx
 import { render, screen, within } from '@testing-library/react';
 import { ReviewDetailView } from '@/components/reviews/review-detail-view';
 import { getReviewJournalById } from '@/lib/review-detail-fixtures';

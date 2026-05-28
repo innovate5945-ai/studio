@@ -1,3 +1,4 @@
+// @file src/__tests__/csv-upload-zone.test.tsx
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import { CsvUploadZone } from '@/components/upload/csv-upload-zone';
 import { processCsvUpload } from '@/actions/csv-upload';

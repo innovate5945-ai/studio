@@ -1,4 +1,5 @@
 'use server';
+// @file src/ai/flows/ai-reality-check-fact-bomb.ts
 /**
  * @fileOverview A Genkit flow that provides an 'AI Reality-Check' report
  * based on trade logs, offering a data-driven critique of trading psychology

@@ -1,3 +1,4 @@
+// @file src/__tests__/alert-setting-form.test.tsx
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import { AlertSettingForm } from "@/components/alert-setting-form"
 import { saveAlertSettings } from "@/actions/alert-settings"

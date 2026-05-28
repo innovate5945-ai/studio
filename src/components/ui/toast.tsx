@@ -1,5 +1,7 @@
 "use client"
 
+// @file src/components/ui/toast.tsx
+/** @overview shadcn/ui 프리미티브 — 비즈니스 로직 없음. */
 import * as React from "react"
 import * as ToastPrimitives from "@radix-ui/react-toast"
 import { cva, type VariantProps } from "class-variance-authority"

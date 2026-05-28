@@ -1,3 +1,4 @@
+// @file src/__tests__/login-form.test.tsx
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { LoginForm } from '@/components/auth/login-form';
 import { loginUser } from '@/actions/auth';

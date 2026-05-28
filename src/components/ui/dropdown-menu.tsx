@@ -1,5 +1,7 @@
 "use client"
 
+// @file src/components/ui/dropdown-menu.tsx
+/** @overview shadcn/ui 프리미티브 — 비즈니스 로직 없음. */
 import * as React from "react"
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu"
 import { Check, ChevronRight, Circle } from "lucide-react"

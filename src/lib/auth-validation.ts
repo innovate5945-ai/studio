@@ -1,3 +1,8 @@
+// @file src/lib/auth-validation.ts
+/**
+ * @overview [UI-AUTH-001] 로그인/회원가입 Zod 스키마·AuthResult 타입.
+ * @call-flow LoginForm/RegisterForm → actions/auth.ts → loginSchema/registerSchema.safeParse
+ */
 import { z } from 'zod';
 
 export const emailSchema = z
@@ -31,5 +36,9 @@ export const registerSchema = z
 
 export type LoginInput = z.infer<typeof loginSchema>;
 export type RegisterInput = z.infer<typeof registerSchema>;
+
+export type AuthResult =
+  | { success: true; message: string }
+  | { success: false; error: string };
 
 export type AuthFieldErrors = Partial<Record<keyof LoginInput | keyof RegisterInput, string>>;

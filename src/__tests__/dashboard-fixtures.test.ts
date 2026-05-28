@@ -1,3 +1,4 @@
+// @file src/__tests__/dashboard-fixtures.test.ts
 import { getDashboardData, formatKrw } from '@/lib/dashboard-fixtures';
 
 describe('dashboard-fixtures', () => {

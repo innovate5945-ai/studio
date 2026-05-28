@@ -1,5 +1,6 @@
 "use client"
 
+// @file src/components/layout/app-sidebar.tsx
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -57,7 +58,7 @@ export function AppSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="px-4 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider group-data-[collapsible=icon]:hidden">
+          <SidebarGroupLabel className="eyebrow px-4 py-2 group-data-[collapsible=icon]:hidden">
             Core Performance
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -85,7 +86,7 @@ export function AppSidebar() {
         </SidebarGroup>
 
         <SidebarGroup>
-          <SidebarGroupLabel className="px-4 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider group-data-[collapsible=icon]:hidden">
+          <SidebarGroupLabel className="eyebrow px-4 py-2 group-data-[collapsible=icon]:hidden">
             Discipline & Risk
           </SidebarGroupLabel>
           <SidebarGroupContent>

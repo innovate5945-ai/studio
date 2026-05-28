@@ -1,5 +1,6 @@
 "use client"
 
+// @file src/components/dashboard/dashboard-analytics.tsx
 import * as React from "react"
 import { TrendingUp, Target, Activity, Calendar } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
@@ -26,10 +27,10 @@ export function DashboardAnalytics() {
 
   return (
     <section className="space-y-6" data-testid="dashboard-analytics">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="section-header">
         <div className="space-y-1">
-          <h2 className="text-xl sm:text-2xl font-headline font-bold">Performance Analytics</h2>
-          <p className="text-sm text-muted-foreground">
+          <h2 className="section-title">Performance Analytics</h2>
+          <p className="section-description">
             {data.periodLabel} 기준 핵심 지표 · 단위: % / 원 / 회
           </p>
         </div>
@@ -98,14 +99,14 @@ function SummaryMetric({
   testId: string
 }) {
   return (
-    <Card className="border-white/5 bg-card/50" data-testid={testId}>
-      <CardContent className="p-4 sm:p-5 flex items-center gap-4">
-        <div className="bg-white/5 p-3 rounded-2xl shrink-0">{icon}</div>
+    <Card className="surface-card-muted" data-testid={testId}>
+      <CardContent className="flex items-center gap-4 p-4 sm:p-5">
+        <div className="shrink-0 rounded-2xl bg-white/5 p-3">{icon}</div>
         <div className="min-w-0">
-          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{title}</p>
-          <p className="text-xl sm:text-2xl font-headline font-bold truncate">
+          <p className="stat-label">{title}</p>
+          <p className="truncate font-headline text-xl font-bold tabular-nums tracking-tight sm:text-2xl">
             {value}
-            <span className="text-sm font-medium text-muted-foreground ml-1">{unit}</span>
+            <span className="ml-1 text-sm font-medium text-muted-foreground">{unit}</span>
           </p>
         </div>
       </CardContent>

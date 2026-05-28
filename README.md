@@ -164,7 +164,14 @@ studio/
 │       ├── review-fixtures.ts     # [UI-REVIEW-001] Mock 복기 일지
 │       └── review-detail-fixtures.ts  # [UI-REVIEW-002] 상세 Mock 데이터
 ├── docs/
+│   ├── AI_CONTEXT.md           # AI 압축 컨텍스트 (작업 시작 1순위)
+│   ├── ARCHITECTURE.md         # 레이어·call-flow
+│   ├── CODE_INDEX.md           # 파일 경로 카탈로그
+│   ├── CODE_ANNOTATION_GUIDE.md
+│   ├── IMPLEMENTATION_STATUS.md
 │   └── blueprint.md
+├── scripts/
+│   └── add-file-headers.mjs    # @file 주석 자동 삽입
 ├── apphosting.yaml
 ├── .idx/dev.nix
 └── package.json
@@ -230,6 +237,39 @@ Flow 정의: `src/ai/flows/ai-reality-check-fact-bomb.ts`
 - **Background**: Obsidian Night `#14131a`
 - **Accent**: Azure Frost `#8ab2ff`
 - **Headline**: Space Grotesk / **Body**: Inter
+
+---
+
+## 문서화 & 코드 주석
+
+IronTrader는 **파일 주소 자동 표기 + AI 컨텍스트 문서** 체계를 사용합니다.
+
+| 문서 | 용도 |
+|------|------|
+| [`docs/AI_CONTEXT.md`](docs/AI_CONTEXT.md) | **AI 우선** — 압축 컨텍스트 (작업 시작 시 1순위) |
+| [`docs/CODE_INDEX.md`](docs/CODE_INDEX.md) | 전체 파일 경로 카탈로그 (코드 주소) |
+| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | 레이어·call-flow·Server Action 규칙 |
+| [`docs/IMPLEMENTATION_STATUS.md`](docs/IMPLEMENTATION_STATUS.md) | Task별 구현 현황 |
+| [`docs/CODE_ANNOTATION_GUIDE.md`](docs/CODE_ANNOTATION_GUIDE.md) | `@file` / `@overview` / `@call-flow` 작성 규칙 |
+| [`docs/blueprint.md`](docs/blueprint.md) | 제품 기능·디자인 SSOT |
+
+### 소스 파일 주석 규칙
+
+```typescript
+'use server';
+
+// @file src/actions/alert-settings.ts
+/**
+ * @overview [UI-ALERT-001] 알람 설정 Server Actions
+ * @call-flow SettingsPage → getAlertSettings → saveAlertSettings
+ */
+```
+
+새 파일 추가 시 `@file` 주석 자동 삽입:
+
+```bash
+node scripts/add-file-headers.mjs
+```
 
 ---
 

@@ -1,3 +1,4 @@
+// @file src/__tests__/discipline.test.ts
 import {
   evaluateDisciplineBreach,
   formatCooldownTime,

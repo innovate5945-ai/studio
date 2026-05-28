@@ -1,3 +1,8 @@
+// @file src/lib/review-fixtures.ts
+/**
+ * @overview [UI-REVIEW-001] 복기 일지 목록 mock 데이터.
+ * @call-flow ReviewsView → getReviewJournals() → ReviewJournalList → ReviewJournalCard
+ */
 export type ReviewJournalEntry = {
   id: string;
   date: string;

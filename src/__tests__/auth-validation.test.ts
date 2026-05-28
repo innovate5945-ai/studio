@@ -1,3 +1,4 @@
+// @file src/__tests__/auth-validation.test.ts
 import { loginSchema, registerSchema } from '@/lib/auth-validation';
 
 describe('auth-validation', () => {

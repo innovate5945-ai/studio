@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* @file src/app/globals.css */
+/* @overview Tailwind base + IronTrader 디자인 토큰 + @layer components 타이포 유틸리티 */
+
 @layer base {
   :root {
     --background: 249 17% 9%;
@@ -15,7 +18,7 @@
     --secondary: 249 15% 18%;
     --secondary-foreground: 210 20% 98%;
     --muted: 249 15% 18%;
-    --muted-foreground: 215 20% 65%;
+    --muted-foreground: 215 16% 72%;
     --accent: 220 100% 77%;
     --accent-foreground: 249 17% 9%;
     --destructive: 0 84.2% 60.2%;
@@ -43,7 +46,7 @@
     --secondary: 249 15% 18%;
     --secondary-foreground: 210 20% 98%;
     --muted: 249 15% 18%;
-    --muted-foreground: 215 20% 65%;
+    --muted-foreground: 215 16% 72%;
     --accent: 220 100% 77%;
     --accent-foreground: 249 17% 9%;
     --destructive: 0 62.8% 30.6%;
@@ -59,13 +62,71 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-body;
+    @apply bg-background text-foreground font-body text-base leading-normal antialiased;
     background-image: 
       radial-gradient(circle at 50% -20%, hsl(var(--primary) / 0.15), transparent 70%),
       radial-gradient(circle at 0% 100%, hsl(var(--accent) / 0.05), transparent 50%);
     background-attachment: fixed;
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply font-headline tracking-tight;
+    @apply font-headline tracking-tight text-foreground;
+  }
+}
+
+@layer components {
+  .page-shell {
+    @apply space-y-8 animate-in fade-in duration-500;
+  }
+
+  .page-header {
+    @apply flex flex-col gap-4 sm:gap-5 lg:flex-row lg:items-end lg:justify-between;
+  }
+
+  .page-header-content {
+    @apply max-w-2xl space-y-2;
+  }
+
+  .page-title {
+    @apply text-3xl font-headline font-bold tracking-tight text-foreground sm:text-4xl;
+  }
+
+  .page-description {
+    @apply text-base leading-relaxed text-muted-foreground sm:text-lg;
+  }
+
+  .section-header {
+    @apply flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between;
+  }
+
+  .section-title {
+    @apply text-xl font-headline font-semibold tracking-tight text-foreground sm:text-2xl;
+  }
+
+  .section-description {
+    @apply text-sm leading-relaxed text-muted-foreground;
+  }
+
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-wider text-muted-foreground;
+  }
+
+  .surface-card {
+    @apply rounded-lg border border-border/60 bg-card/60 shadow-sm backdrop-blur-sm;
+  }
+
+  .surface-card-muted {
+    @apply rounded-lg border border-white/5 bg-card/50 shadow-sm backdrop-blur-md;
+  }
+
+  .stat-label {
+    @apply text-xs font-medium uppercase tracking-wider text-muted-foreground;
+  }
+
+  .stat-value {
+    @apply font-headline text-2xl font-bold tabular-nums tracking-tight text-foreground sm:text-3xl;
+  }
+
+  .prose-muted {
+    @apply text-sm leading-relaxed text-muted-foreground;
   }
 }

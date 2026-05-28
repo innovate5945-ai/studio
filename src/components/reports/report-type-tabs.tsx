@@ -1,5 +1,6 @@
 "use client"
 
+// @file src/components/reports/report-type-tabs.tsx
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { cn } from "@/lib/utils"
 import { REPORT_TYPE_OPTIONS, type ReportType } from "@/lib/report-fixtures"

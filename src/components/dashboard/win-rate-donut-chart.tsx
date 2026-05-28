@@ -1,5 +1,6 @@
 "use client"
 
+// @file src/components/dashboard/win-rate-donut-chart.tsx
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { formatWinRate } from "@/lib/dashboard-fixtures"

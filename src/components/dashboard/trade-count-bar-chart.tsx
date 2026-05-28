@@ -1,5 +1,6 @@
 "use client"
 
+// @file src/components/dashboard/trade-count-bar-chart.tsx
 import {
   BarChart,
   Bar,

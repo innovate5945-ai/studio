@@ -1,3 +1,8 @@
+// @file src/lib/dashboard-fixtures.ts
+/**
+ * @overview [UI-DASH-001] 대시보드 차트 mock 데이터·포맷 헬퍼.
+ * @call-flow DashboardAnalytics → getDashboardData(period) → SummaryMetric + charts
+ */
 export type DashboardPeriod = '1w' | '1m' | '3m';
 
 export type MddDataPoint = {

@@ -1,3 +1,8 @@
+// @file src/lib/review-detail-fixtures.ts
+/**
+ * @overview [UI-REVIEW-002] 복기 일지 상세 mock (차트·인사이트·분석).
+ * @call-flow review/[id]/page → getReviewDetail(id) → ReviewDetailView
+ */
 import {
   getReviewJournals,
   type ReviewJournalEntry,

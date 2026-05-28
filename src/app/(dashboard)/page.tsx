@@ -1,11 +1,20 @@
 "use client"
 
+// @file src/app/(dashboard)/page.tsx
+/**
+ * @overview Command Center (/) — Live Session Monitor, DashboardAnalytics, AI Fact-Bomb.
+ *
+ * @call-flow
+ * useDiscipline() → recordTrade/addLoss → evaluateDisciplineBreach (via Provider)
+ * DashboardAnalytics → getDashboardData (lib/dashboard-fixtures)
+ */
 import * as React from "react"
 import { Play, Square, Plus, Minus, RotateCcw, Zap } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { FactBombModal } from "@/components/ai/fact-bomb-modal"
 import { DashboardAnalytics } from "@/components/dashboard/dashboard-analytics"
+import { PageHeader } from "@/components/layout/page-header"
 import { useDiscipline } from "@/contexts/discipline-provider"
 import { cn } from "@/lib/utils"
 
@@ -34,69 +43,84 @@ export default function DashboardPage() {
   const tradeNearCap = sessionMetrics.tradeCount >= settings.tradeCap * 0.8
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-700">
-      <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="space-y-1">
-          <h1 className="text-3xl sm:text-4xl font-headline font-bold text-foreground">
-            Command Center
-          </h1>
-          <p className="text-muted-foreground">
-            Real-time equity curve and discipline monitoring.
-          </p>
-        </div>
-        <Button
-          onClick={handleSessionToggle}
-          disabled={cooldown.active}
-          variant={isSessionActive ? "destructive" : "default"}
-          className={cn(
-            "w-full sm:w-auto font-bold transition-all duration-300",
-            !isSessionActive && !cooldown.active && "bg-emerald-500 hover:bg-emerald-600 text-white"
-          )}
-        >
-          {isSessionActive ? (
-            <><Square className="w-4 h-4 mr-2 fill-current" /> Stop Session</>
-          ) : (
-            <><Play className="w-4 h-4 mr-2 fill-current" /> Start Session</>
-          )}
-        </Button>
-      </header>
+    <div className="page-shell">
+      <PageHeader
+        eyebrow="Live Monitoring"
+        title="Command Center"
+        description="Real-time equity curve and discipline monitoring."
+        actions={
+          <Button
+            onClick={handleSessionToggle}
+            disabled={cooldown.active}
+            variant={isSessionActive ? "destructive" : "default"}
+            className={cn(
+              "w-full font-semibold transition-all duration-300 sm:w-auto",
+              !isSessionActive && !cooldown.active && "bg-emerald-500 text-white hover:bg-emerald-600"
+            )}
+          >
+            {isSessionActive ? (
+              <>
+                <Square className="mr-2 h-4 w-4 fill-current" /> Stop Session
+              </>
+            ) : (
+              <>
+                <Play className="mr-2 h-4 w-4 fill-current" /> Start Session
+              </>
+            )}
+          </Button>
+        }
+      />
 
-      <Card className="border-white/5 bg-card/50 backdrop-blur-md">
-        <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <CardTitle className="font-headline text-xl">Live Session Monitor</CardTitle>
-            <CardDescription>
+      <Card className="surface-card-muted">
+        <CardHeader className="flex flex-col gap-4 border-b border-white/5 pb-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="space-y-1.5">
+            <CardTitle className="font-headline text-lg font-semibold sm:text-xl">
+              Live Session Monitor
+            </CardTitle>
+            <CardDescription className="max-w-prose leading-relaxed">
               세션 활성화 후 매매/손실을 기록하면 alert-settings 임계값과 비교해 자동 알람이 발생합니다.
             </CardDescription>
           </div>
-          <Button variant="outline" size="sm" onClick={resetSessionMetrics} disabled={cooldown.active} className="w-full sm:w-auto">
-            <RotateCcw className="w-4 h-4 mr-2" />
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={resetSessionMetrics}
+            disabled={cooldown.active}
+            className="w-full sm:w-auto"
+          >
+            <RotateCcw className="mr-2 h-4 w-4" />
             Reset Metrics
           </Button>
         </CardHeader>
-        <CardContent className="flex flex-col md:flex-row md:items-center gap-4">
-          <div className="flex-1 grid grid-cols-1 xs:grid-cols-2 gap-4 text-sm">
-            <div className="p-3 rounded-lg bg-white/5 border border-white/5">
-              <p className="text-muted-foreground">당일 손실</p>
-              <p className={cn("text-2xl font-bold", lossNearLimit && "text-destructive")}>
-                {sessionMetrics.dailyLossPercent}% / {settings.lossLimit}%
+        <CardContent className="flex flex-col gap-6 pt-6 md:flex-row md:items-center">
+          <div className="grid flex-1 grid-cols-1 gap-4 xs:grid-cols-2">
+            <div className="rounded-lg border border-white/5 bg-white/5 p-4">
+              <p className="stat-label">당일 손실</p>
+              <p className={cn("stat-value mt-1", lossNearLimit && "text-destructive")}>
+                {sessionMetrics.dailyLossPercent}%
+                <span className="ml-1 text-base font-medium text-muted-foreground">
+                  / {settings.lossLimit}%
+                </span>
               </p>
             </div>
-            <div className="p-3 rounded-lg bg-white/5 border border-white/5">
-              <p className="text-muted-foreground">매매 횟수</p>
-              <p className={cn("text-2xl font-bold", tradeNearCap && "text-destructive")}>
-                {sessionMetrics.tradeCount} / {settings.tradeCap}회
+            <div className="rounded-lg border border-white/5 bg-white/5 p-4">
+              <p className="stat-label">매매 횟수</p>
+              <p className={cn("stat-value mt-1", tradeNearCap && "text-destructive")}>
+                {sessionMetrics.tradeCount}
+                <span className="ml-1 text-base font-medium text-muted-foreground">
+                  / {settings.tradeCap}회
+                </span>
               </p>
             </div>
           </div>
-          <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
+          <div className="flex w-full flex-col gap-2 sm:flex-row md:w-auto">
             <Button
               variant="secondary"
               onClick={recordTrade}
               disabled={!isSessionActive || cooldown.active}
               className="w-full sm:w-auto"
             >
-              <Plus className="w-4 h-4 mr-2" />
+              <Plus className="mr-2 h-4 w-4" />
               +1 Trade
             </Button>
             <Button
@@ -105,7 +129,7 @@ export default function DashboardPage() {
               disabled={!isSessionActive || cooldown.active}
               className="w-full sm:w-auto"
             >
-              <Minus className="w-4 h-4 mr-2" />
+              <Minus className="mr-2 h-4 w-4" />
               +1% Loss
             </Button>
           </div>
@@ -114,13 +138,15 @@ export default function DashboardPage() {
 
       <DashboardAnalytics />
 
-      <Card className="border-primary/20 bg-primary/5 relative overflow-hidden group">
-        <div className="absolute top-0 right-0 p-4">
-          <Zap className="w-8 h-8 text-primary/20 group-hover:text-primary transition-colors" />
+      <Card className="group relative overflow-hidden border-primary/20 bg-primary/5">
+        <div className="absolute right-0 top-0 p-4">
+          <Zap className="h-8 w-8 text-primary/20 transition-colors group-hover:text-primary" />
         </div>
-        <CardHeader>
-          <CardTitle className="text-primary font-headline">AI Reality-Check</CardTitle>
-          <CardDescription className="text-primary/70">
+        <CardHeader className="space-y-1.5">
+          <CardTitle className="font-headline text-lg font-semibold text-primary sm:text-xl">
+            AI Reality-Check
+          </CardTitle>
+          <CardDescription className="max-w-prose leading-relaxed text-primary/70">
             Request a brutal data-driven critique of your current session.
           </CardDescription>
         </CardHeader>

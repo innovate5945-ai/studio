@@ -1,5 +1,7 @@
 "use client"
 
+// @file src/components/ui/toaster.tsx
+/** @overview shadcn/ui 프리미티브 — 비즈니스 로직 없음. */
 import { useToast } from "@/hooks/use-toast"
 import {
   Toast,

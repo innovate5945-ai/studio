@@ -1,12 +1,25 @@
 "use client"
 
+// @file src/contexts/discipline-provider.tsx
+/**
+ * @overview [UI-ALERT-002] 앱 전역 규율 상태 Provider — settings, session, cooldown, Fact-Bomb 플래그.
+ *
+ * @call-flow
+ * 1. bootstrap: getAlertSettings ∥ getDisciplineCooldown → readStoredCooldown merge → applyCooldown
+ * 2. session active: recordTrade/addLoss → evaluateDisciplineBreach → triggerBreach
+ * 3. triggerBreach: startDisciplineCooldown → applyCooldown → setIsFactBombOpen(true)
+ * 4. cooldown tick: getRemainingSeconds → 만료 시 clearStoredCooldown
+ *
+ * @see src/app/layout.tsx (Provider wrap), src/components/dashboard/cooldown-banner.tsx
+ */
 import * as React from "react"
-import { getAlertSettings, type AlertSettingsInput } from "@/actions/alert-settings"
+import { getAlertSettings } from "@/actions/alert-settings"
+import { type AlertSettingsInput } from "@/lib/alert-settings"
 import {
   getDisciplineCooldown,
   startDisciplineCooldown,
-  type DisciplineCooldownState,
 } from "@/actions/discipline-cooldown"
+import { type DisciplineCooldownState } from "@/lib/discipline-cooldown"
 import {
   DEFAULT_SESSION_METRICS,
   evaluateDisciplineBreach,
@@ -34,6 +47,7 @@ type DisciplineContextValue = {
 
 const DisciplineContext = React.createContext<DisciplineContextValue | null>(null)
 
+/** DisciplineProvider 하위에서 전역 규율 상태를 소비합니다. */
 export function useDiscipline() {
   const context = React.useContext(DisciplineContext)
   if (!context) {
@@ -42,6 +56,7 @@ export function useDiscipline() {
   return context
 }
 
+/** 루트 레이아웃에서 전역 규율 Context를 제공합니다. */
 export function DisciplineProvider({ children }: { children: React.ReactNode }) {
   const [settings, setSettings] = React.useState<AlertSettingsInput>({
     lossLimit: 5,

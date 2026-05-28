@@ -1,5 +1,7 @@
 "use client"
 
+// @file src/components/ui/slider.tsx
+/** @overview shadcn/ui 프리미티브 — 비즈니스 로직 없음. */
 import * as React from "react"
 import * as SliderPrimitive from "@radix-ui/react-slider"
 

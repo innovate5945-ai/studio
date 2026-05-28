@@ -1,3 +1,4 @@
+// @file src/app/(auth)/register/page.tsx
 import type { Metadata } from "next"
 import { AuthFormLayout } from "@/components/auth/auth-form-layout"
 import { RegisterForm } from "@/components/auth/register-form"

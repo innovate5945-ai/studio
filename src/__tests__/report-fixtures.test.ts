@@ -1,3 +1,4 @@
+// @file src/__tests__/report-fixtures.test.ts
 import { getReportData, formatReportPnl } from '@/lib/report-fixtures';
 
 describe('report-fixtures', () => {

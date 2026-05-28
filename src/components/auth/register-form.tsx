@@ -1,5 +1,6 @@
 "use client"
 
+// @file src/components/auth/register-form.tsx
 import * as React from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"

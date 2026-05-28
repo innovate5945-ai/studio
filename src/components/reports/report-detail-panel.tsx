@@ -1,5 +1,6 @@
 "use client"
 
+// @file src/components/reports/report-detail-panel.tsx
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { FileText, Lightbulb } from "lucide-react"
@@ -15,29 +16,29 @@ type ReportDetailPanelProps = {
 export function ReportDetailPanel({ report }: ReportDetailPanelProps) {
   return (
     <Card
-      className="border-white/5 bg-card/50 backdrop-blur-md"
+      className="surface-card-muted"
       data-testid="report-detail-panel"
     >
       <CardHeader className="space-y-2">
         <div className="flex items-center gap-2">
-          <FileText className="w-5 h-5 text-primary" />
-          <CardTitle className="font-headline text-xl sm:text-2xl">{report.summaryTitle}</CardTitle>
+          <FileText className="h-5 w-5 text-primary" />
+          <CardTitle className="font-headline text-lg font-semibold sm:text-xl">
+            {report.summaryTitle}
+          </CardTitle>
         </div>
-        <CardDescription className="text-sm leading-relaxed">
-          {report.periodCaption}
-        </CardDescription>
+        <CardDescription className="leading-relaxed">{report.periodCaption}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-3" data-testid="report-key-insights">
-          <h3 className="text-xs font-bold uppercase tracking-widest text-primary flex items-center gap-2">
-            <Lightbulb className="w-4 h-4" />
+          <h3 className="eyebrow flex items-center gap-2 text-primary">
+            <Lightbulb className="h-4 w-4" />
             Key Insights
           </h3>
           <ul className="space-y-2">
             {report.keyInsights.map((insight) => (
               <li
                 key={insight}
-                className="text-sm font-medium px-3 py-2 rounded-lg bg-primary/5 border border-primary/10"
+                className="rounded-lg border border-primary/10 bg-primary/5 px-3 py-2.5 text-sm font-medium leading-relaxed"
               >
                 {insight}
               </li>
@@ -48,13 +49,11 @@ export function ReportDetailPanel({ report }: ReportDetailPanelProps) {
         <Separator className="bg-white/10" />
 
         <div className="space-y-4" data-testid="report-analysis-text">
-          <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
-            상세 분석
-          </h3>
+          <h3 className="eyebrow">상세 분석</h3>
           {report.analysisParagraphs.map((paragraph, index) => (
             <p
               key={`${report.type}-p-${index}`}
-              className="text-sm sm:text-base text-foreground/90 leading-relaxed"
+              className="text-sm leading-relaxed text-foreground/90 sm:text-base"
             >
               {paragraph}
             </p>

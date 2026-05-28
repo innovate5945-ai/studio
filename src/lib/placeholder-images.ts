@@ -1,3 +1,4 @@
+// @file src/lib/placeholder-images.ts
 import data from './placeholder-images.json';
 
 export type ImagePlaceholder = {

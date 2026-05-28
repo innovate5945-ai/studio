@@ -1,3 +1,4 @@
+// @file src/__tests__/dashboard-analytics.test.tsx
 import { render, screen, fireEvent } from '@testing-library/react';
 import { DashboardAnalytics } from '@/components/dashboard/dashboard-analytics';
 

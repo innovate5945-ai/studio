@@ -1,3 +1,4 @@
+// @file src/__tests__/review-detail-fixtures.test.ts
 import { getReviewJournalById, formatTimelinePnl } from '@/lib/review-detail-fixtures';
 import { getReviewJournals } from '@/lib/review-fixtures';
 

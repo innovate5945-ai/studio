@@ -1,3 +1,4 @@
+// @file src/__tests__/reviews-view.test.tsx
 import { render, screen, within, fireEvent } from '@testing-library/react';
 import { ReviewsView } from '@/components/reviews/reviews-view';
 import { getReviewJournals } from '@/lib/review-fixtures';

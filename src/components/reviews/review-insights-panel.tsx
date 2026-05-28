@@ -1,5 +1,6 @@
 "use client"
 
+// @file src/components/reviews/review-insights-panel.tsx
 import { Bot, BrainCircuit, CheckCircle2, Sparkles } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"

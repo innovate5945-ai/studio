@@ -1,3 +1,4 @@
+// @file src/__tests__/review-journal-list.test.tsx
 import { render, screen, within } from '@testing-library/react';
 import { ReviewJournalList } from '@/components/reviews/review-journal-list';
 import { getReviewJournals, formatDailyReturn } from '@/lib/review-fixtures';

@@ -1,3 +1,5 @@
+// @file src/components/ui/skeleton.tsx
+/** @overview shadcn/ui 프리미티브 — 비즈니스 로직 없음. */
 import { cn } from "@/lib/utils"
 
 function Skeleton({

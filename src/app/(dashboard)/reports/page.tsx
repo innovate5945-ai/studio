@@ -1,3 +1,4 @@
+// @file src/app/(dashboard)/reports/page.tsx
 import { ReportsView } from "@/components/reports/reports-view"
 
 export default function ReportsPage() {

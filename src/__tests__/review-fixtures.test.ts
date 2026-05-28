@@ -1,3 +1,4 @@
+// @file src/__tests__/review-fixtures.test.ts
 import { getReviewJournals, formatDailyReturn, getReturnTone } from '@/lib/review-fixtures';
 
 describe('review-fixtures', () => {

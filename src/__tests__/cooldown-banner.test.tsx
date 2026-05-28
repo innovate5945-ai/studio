@@ -1,3 +1,4 @@
+// @file src/__tests__/cooldown-banner.test.tsx
 import { render, screen } from '@testing-library/react';
 import { CooldownBanner } from '@/components/dashboard/cooldown-banner';
 import { useDiscipline } from '@/contexts/discipline-provider';

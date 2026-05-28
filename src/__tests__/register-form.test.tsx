@@ -1,3 +1,4 @@
+// @file src/__tests__/register-form.test.tsx
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { RegisterForm } from '@/components/auth/register-form';
 import { registerUser } from '@/actions/auth';

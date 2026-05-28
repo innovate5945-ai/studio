@@ -1,5 +1,6 @@
 "use client"
 
+// @file src/components/ai/fact-bomb-modal.tsx
 import * as React from "react"
 import {
   Sparkles,

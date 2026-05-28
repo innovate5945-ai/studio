@@ -1,5 +1,6 @@
 "use client"
 
+// @file src/components/alert-setting-form.tsx
 import * as React from "react"
 import { ShieldAlert, Save, AlertCircle, Loader2 } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
@@ -11,7 +12,8 @@ import { useToast } from "@/hooks/use-toast"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Skeleton } from "@/components/ui/skeleton"
 import { cn } from "@/lib/utils"
-import { saveAlertSettings, type AlertSettingsInput } from "@/actions/alert-settings"
+import { saveAlertSettings } from "@/actions/alert-settings"
+import { type AlertSettingsInput } from "@/lib/alert-settings"
 
 interface AlertSettingFormProps {
   defaultValues?: AlertSettingsInput
@@ -127,21 +129,21 @@ export function AlertSettingForm({
         </Alert>
       )}
 
-      <Card className="border-white/5 bg-card/50 backdrop-blur-sm shadow-xl">
+      <Card className="surface-card-muted shadow-xl">
         <CardHeader className="border-b border-white/5 bg-white/5">
-          <CardTitle className="flex items-center gap-2 text-xl font-headline font-bold">
-            <ShieldAlert className="w-5 h-5 text-primary" />
+          <CardTitle className="flex items-center gap-2 font-headline text-lg font-semibold sm:text-xl">
+            <ShieldAlert className="h-5 w-5 text-primary" />
             알람 설정
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="max-w-prose leading-relaxed">
             리스크 관리 기준을 설정하여 심리적 매매 편향을 방지합니다.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-10 pt-8">
           <div className="space-y-5">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <Label className="text-sm font-bold text-muted-foreground uppercase tracking-wider">손실폭 설정</Label>
-              <span className="text-sm font-bold text-primary bg-primary/10 px-3 py-1.5 rounded-lg border border-primary/20">
+            <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
+              <Label className="eyebrow">손실폭 설정</Label>
+              <span className="inline-flex w-fit items-center rounded-lg border border-primary/20 bg-primary/10 px-3 py-1.5 text-sm font-semibold text-primary">
                 현재 설정: 당일 -{lossLimit[0]}% 손실 시 제한
               </span>
             </div>
@@ -154,14 +156,14 @@ export function AlertSettingForm({
               className="py-2"
               aria-label="손실폭 설정 슬라이더"
             />
-            <div className="flex justify-between text-[10px] font-bold text-muted-foreground uppercase opacity-60">
+            <div className="flex justify-between text-xs font-medium uppercase tracking-wider text-muted-foreground/70">
               <span>최소 1%</span>
               <span>최대 20%</span>
             </div>
           </div>
 
           <div className="space-y-4">
-            <Label htmlFor="trade-cap" className="text-sm font-bold text-muted-foreground uppercase tracking-wider">
+            <Label htmlFor="trade-cap" className="eyebrow">
               매매횟수 상한
             </Label>
             <div className="relative group">
@@ -184,8 +186,8 @@ export function AlertSettingForm({
               </div>
             </div>
             {inputError && (
-              <p className="text-xs font-bold text-destructive flex items-center gap-1.5 animate-in fade-in slide-in-from-top-1 duration-200">
-                <AlertCircle className="w-3 h-3" />
+              <p className="flex items-center gap-1.5 text-sm font-medium text-destructive animate-in fade-in slide-in-from-top-1 duration-200">
+                <AlertCircle className="h-3.5 w-3.5 shrink-0" />
                 {inputError}
               </p>
             )}
